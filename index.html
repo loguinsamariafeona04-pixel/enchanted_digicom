@@ -587,7 +587,7 @@ footer{border-top:1px solid rgba(212,175,55,.12);padding:2rem 0;text-align:cente
   <div class="nav-mobile-drawer" id="nav-mobile-drawer">
     <a onclick="showPage('home');closeMobileNav()" id="mnav-home" class="active">Verses</a>
     <a onclick="showPage('about');closeMobileNav()" id="mnav-about">The Poet</a>
-    <a onclick="showPage('admin');closeMobileNav()" id="mnav-admin" class="mobile-admin-link">✦ Writer's Sanctum</a>
+    <a onclick="showPage('admin');closeMobileNav()" id="mnav-admin" class="mobile-admin-link">✦ Writer's Gate</a>
   </div>
 
   <!-- HOME -->
@@ -636,18 +636,18 @@ footer{border-top:1px solid rgba(212,175,55,.12);padding:2rem 0;text-align:cente
       <div id="admin-login-state">
         <div class="admin-login-card">
           <div class="admin-icon">🔮</div>
-          <h2>Writer's Sanctum</h2>
+          <h2>Writer's Gate</h2>
           <p class="subtitle">Enter your passphrase, dear poet</p>
           <div class="admin-login-error" id="admin-login-error">The passphrase is not quite right, dear traveller.</div>
           <input type="password" class="admin-input" id="admin-password" placeholder="Enter your secret word…" onkeydown="if(event.key==='Enter')tryAdminLogin()">
-          <button class="btn-admin-login" onclick="tryAdminLogin()">✦ Open the Sanctum</button>
+          <button class="btn-admin-login" onclick="tryAdminLogin()">✦ Open the Gate</button>
           <p style="margin-top:1.2rem;font-size:.78rem;color:rgba(200,216,232,.3);cursor:pointer;font-family:'EB Garamond',serif;" onclick="showPage('home')">← Return to the grove</p>
         </div>
       </div>
       <div id="admin-dashboard-state" style="display:none;">
         <div class="admin-header">
           <div>
-            <div class="admin-title">Writer's Sanctum<small>✦ The Enchanted Quill — Admin</small></div>
+            <div class="admin-title">Writer's Gate<small>✦ The Enchanted Quill — Admin</small></div>
           </div>
           <button class="btn-admin-logout" onclick="logoutAdmin()">Seal the gate & leave</button>
         </div>
@@ -1256,7 +1256,7 @@ function tryAdminLogin(){
   if(document.getElementById('admin-password').value===WRITER_PASS){isWriter=true;renderAdminPage();}
   else{const err=document.getElementById('admin-login-error');err.style.display='block';document.getElementById('admin-password').value='';setTimeout(()=>err.style.display='none',3000);}
 }
-function logoutAdmin(){isWriter=false;showToast('You have sealed the sanctum. Until next time, dear poet.');showPage('home');}
+function logoutAdmin(){isWriter=false;showToast('You have sealed the gate. Until next time, dear poet.');showPage('home');}
 
 // ═══════════════════════════════════════
 // STATS
