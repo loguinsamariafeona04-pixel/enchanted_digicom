@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0e121a">
+<title>The Enchanted Quill — A Poetry Sanctuary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Dancing+Script:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest-deep:#0e121a;--forest:#0d1e30;--forest-mid:#162438;--moss:#1e3a54;
+  --candle:#f5c842;--candle-soft:#f7d875;--candle-dim:#c9a030;
+  --parchment:#f2e8d0;--parchment-dark:#e8d9b8;--ink:#1c1208;
+  --fairy-glow:#7ab8e8;--text-light:#f0e8d5;--text-muted:#c4b898;
+  --gold-leaf:#d4af37;--rose:#e8738a;--rose-light:#f4a0b5;
+  --sapphire:#7ab3d4;--lavender:#b8a4d4;
+  --admin-dark:#07101e;--admin-card:#0d1a30;--admin-border:rgba(122,179,212,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background-color:var(--forest-deep);color:var(--text-light);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.8;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+#firefly-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.bg-layer{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 90%,rgba(13,30,48,.95) 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 80% 10%,rgba(8,18,28,.9) 0%,transparent 55%),linear-gradient(180deg,#05080d 0%,#0e121a 30%,#0d1e30 60%,#0e121a 100%);z-index:0;}
+.landscape-bg{position:fixed;bottom:0;left:0;width:100%;height:auto;pointer-events:none;z-index:1;opacity:.55;display:block;}
+#app{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 2rem;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-bottom:1px solid rgba(212,175,55,.2);}
+.nav-brand{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--candle);letter-spacing:.08em;display:flex;align-items:center;gap:.6rem;cursor:pointer;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center;}
+.nav-links a{font-family:'EB Garamond',serif;font-size:.95rem;color:var(--text-muted);text-decoration:none;letter-spacing:.05em;transition:color .3s;cursor:pointer;}
+.nav-links a:hover,.nav-links a.active{color:var(--candle-soft);}
+.admin-nav-link{display:inline-flex!important;align-items:center;gap:.4rem;padding:.3rem 1rem;border-radius:20px;background:rgba(122,179,212,.08);border:1px solid rgba(122,179,212,.2);color:var(--sapphire)!important;font-size:.88rem!important;transition:all .25s!important;}
+.admin-nav-link:hover{background:rgba(122,179,212,.15)!important;color:#b0d4ec!important;}
+.admin-nav-link.active{background:rgba(122,179,212,.18)!important;border-color:rgba(122,179,212,.45)!important;color:#c8e4f4!important;}
+.page{display:none;}.page.active{display:block;}
+/* HERO */
+.hero{text-align:center;padding:5rem 0 4rem;}
+.hero-eyebrow{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--fairy-glow);margin-bottom:1rem;opacity:.85;animation:fadeUp 1s ease .2s both;}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2.4rem,6vw,4rem);color:var(--candle-soft);line-height:1.2;margin-bottom:1.2rem;text-shadow:0 0 40px rgba(245,200,66,.2);animation:fadeUp 1s ease .4s both;}
+.hero-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.15rem;color:var(--text-muted);max-width:520px;margin:0 auto 2.5rem;animation:fadeUp 1s ease .6s both;}
+.ornament{display:block;text-align:center;color:var(--gold-leaf);font-size:1.4rem;letter-spacing:.5rem;margin:1.5rem 0;opacity:.6;animation:fadeUp 1s ease .8s both;}
+.search-bar{display:flex;align-items:center;gap:1rem;max-width:560px;margin:0 auto 1.5rem;animation:fadeUp 1s ease 1s both;}
+.search-bar input{flex:1;background:rgba(242,232,208,.07);border:1px solid rgba(212,175,55,.25);border-radius:40px;padding:.65rem 1.4rem;color:var(--text-light);font-family:'EB Garamond',serif;font-size:1rem;outline:none;transition:border-color .3s,background .3s;}
+.search-bar input::placeholder{color:var(--text-muted);}
+.search-bar input:focus{border-color:rgba(212,175,55,.55);background:rgba(242,232,208,.1);}
+.tags{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;margin-bottom:3rem;animation:fadeUp 1s ease 1.1s both;}
+.tag{padding:.3rem 1rem;border:1px solid rgba(212,175,55,.3);border-radius:20px;font-size:.82rem;font-family:'EB Garamond',serif;letter-spacing:.06em;color:var(--text-muted);cursor:pointer;transition:all .25s;background:transparent;}
+.tag:hover,.tag.active{background:rgba(212,175,55,.12);border-color:var(--candle-dim);color:var(--candle-soft);}
+.section-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold-leaf);letter-spacing:.15em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,.35),transparent);}
+/* CARDS */
+.poems-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;margin-bottom:2rem;}
+.poem-card{background:linear-gradient(145deg,rgba(13,30,48,.85) 0%,rgba(10,22,38,.95) 100%);border:1px solid rgba(212,175,55,.18);border-radius:16px;padding:2rem 1.8rem;cursor:pointer;transition:transform .35s ease,box-shadow .35s ease,border-color .35s;position:relative;overflow:hidden;animation:fadeUp .7s ease both;display:flex;flex-direction:column;}
+.poem-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(212,175,55,.08) 0%,transparent 70%);pointer-events:none;}
+.poem-card:hover{transform:translateY(-5px);border-color:rgba(212,175,55,.42);box-shadow:0 12px 40px rgba(0,0,0,.45),0 0 30px rgba(212,175,55,.06);}
+.poem-card .poem-tag{font-size:.72rem;font-family:'EB Garamond',serif;letter-spacing:.1em;text-transform:uppercase;color:var(--fairy-glow);margin-bottom:.7rem;opacity:.85;}
+.poem-card h3{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--candle-soft);margin-bottom:.8rem;line-height:1.3;}
+.poem-preview{font-family:'Crimson Pro',serif;font-style:italic;font-size:.97rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.2rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
+.poem-meta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:rgba(196,184,152,.55);font-family:'EB Garamond',serif;letter-spacing:.04em;border-top:1px solid rgba(212,175,55,.1);padding-top:.9rem;}
+.poem-meta-left{display:flex;align-items:center;gap:.8rem;}
+.read-link{color:var(--candle-dim);font-size:.82rem;transition:color .2s;}
+.poem-card:hover .read-link{color:var(--candle-soft);}
+.card-heart{background:none;border:none;cursor:pointer;padding:0;line-height:1;transition:transform .2s;display:flex;align-items:center;}
+.card-heart:hover{transform:scale(1.25);}
+.card-heart svg{width:15px;height:15px;display:block;}
+.card-heart.liked svg{fill:var(--rose);stroke:var(--rose);}
+.card-heart:not(.liked) svg{fill:none;stroke:rgba(196,184,152,.6);}
+.poem-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;background:linear-gradient(135deg,rgba(15,28,50,.9) 0%,rgba(8,16,30,.95) 100%);border-color:rgba(212,175,55,.3);}
+@media(max-width:640px){.poem-card.featured{grid-template-columns:1fr;}}
+.poem-card.featured .poem-content{padding-right:1rem;display:flex;flex-direction:column;}
+.poem-card.featured h3{font-size:1.4rem;margin-bottom:1rem;}
+.poem-card.featured .poem-preview{-webkit-line-clamp:6;font-size:1.05rem;}
+.featured-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .9rem;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);border-radius:20px;font-size:.72rem;font-family:'EB Garamond',serif;letter-spacing:.1em;color:var(--candle);margin-bottom:1rem;width:fit-content;}
+.poem-illustration{text-align:center;opacity:.8;}
+/* GRID PAGINATION */
+.grove-pagination{display:flex;justify-content:center;align-items:center;gap:.5rem;margin:1.5rem 0 4rem;flex-wrap:wrap;}
+.pg-leaf{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,175,55,.22);background:transparent;font-family:'EB Garamond',serif;font-size:.9rem;color:var(--text-muted);cursor:pointer;transition:all .25s;}
+.pg-leaf:hover{border-color:rgba(212,175,55,.5);color:var(--candle-soft);background:rgba(212,175,55,.08);}
+.pg-leaf.active{background:rgba(212,175,55,.15);border-color:var(--candle-dim);color:var(--candle-soft);}
+.pg-leaf.disabled{opacity:.3;cursor:default;pointer-events:none;}
+.pg-nav{display:flex;align-items:center;gap:.35rem;padding:.35rem 1rem;border:1px solid rgba(212,175,55,.2);border-radius:20px;background:transparent;font-family:'EB Garamond',serif;font-size:.82rem;color:var(--text-muted);cursor:pointer;transition:all .25s;letter-spacing:.05em;}
+.pg-nav:hover{border-color:rgba(212,175,55,.45);color:var(--candle-soft);}
+.pg-nav.disabled{opacity:.3;cursor:default;pointer-events:none;}
+.pg-dots{color:rgba(212,175,55,.4);font-size:.7rem;padding:0 .3rem;}
+/* POEM READING */
+#page-poem{min-height:100vh;padding-bottom:6rem;}
+.poem-reading-wrap{max-width:680px;margin:0 auto;padding:3rem 0 0;animation:fadeUp .6s ease both;}
+.back-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:'EB Garamond',serif;font-size:.9rem;color:var(--text-muted);cursor:pointer;border:none;background:none;letter-spacing:.06em;transition:color .2s;margin-bottom:2.5rem;padding:0;}
+.back-btn:hover{color:var(--candle-soft);}
+.reading-tag{font-size:.72rem;font-family:'EB Garamond',serif;letter-spacing:.14em;text-transform:uppercase;color:var(--fairy-glow);margin-bottom:.6rem;opacity:.85;}
+.reading-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,2.5rem);color:var(--candle-soft);line-height:1.2;margin-bottom:.5rem;}
+.reading-dates{font-size:.82rem;color:var(--text-muted);font-family:'EB Garamond',serif;margin-bottom:.5rem;opacity:.7;display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center;}
+.reading-dates .updated-badge{background:rgba(122,179,212,.1);border:1px solid rgba(122,179,212,.2);border-radius:12px;padding:.1rem .6rem;font-size:.72rem;color:var(--fairy-glow);letter-spacing:.06em;}
+.like-bar{display:flex;align-items:center;gap:.7rem;margin:1.4rem 0 2rem;}
+.like-btn{display:flex;align-items:center;gap:.5rem;background:rgba(232,115,138,.08);border:1px solid rgba(232,115,138,.25);border-radius:30px;padding:.4rem 1.1rem;cursor:pointer;transition:all .25s;font-family:'EB Garamond',serif;font-size:.9rem;color:var(--rose-light);}
+.like-btn:hover{background:rgba(232,115,138,.16);border-color:rgba(232,115,138,.5);transform:scale(1.03);}
+.like-btn.liked{background:rgba(232,115,138,.22);border-color:var(--rose);}
+.like-btn svg{width:18px;height:18px;transition:transform .2s;}
+.like-btn.liked svg{fill:var(--rose);stroke:var(--rose);}
+.like-btn:not(.liked) svg{fill:none;stroke:var(--rose-light);}
+.like-btn:hover svg{transform:scale(1.15);}
+.like-count{font-family:'EB Garamond',serif;font-size:.88rem;color:rgba(196,184,152,.6);}
+.ornament-reading{text-align:center;color:var(--gold-leaf);font-size:1.1rem;letter-spacing:.6rem;margin:2rem 0;opacity:.5;}
+.poem-full-text{font-family:'Crimson Pro',serif;font-size:1.15rem;line-height:2.1;color:var(--parchment);white-space:pre-line;border-left:2px solid rgba(212,175,55,.2);padding-left:1.8rem;margin:.5rem 0 2rem;}
+/* COMMENTS */
+.comments-section{margin-top:4rem;padding-top:3rem;border-top:1px solid rgba(212,175,55,.15);}
+.comments-title{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold-leaf);letter-spacing:.15em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;}
+.comments-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,.3),transparent);}
+.comment-form{background:rgba(13,30,48,.6);border:1px solid rgba(212,175,55,.18);border-radius:16px;padding:1.8rem;margin-bottom:2.5rem;}
+.comment-form-title{font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--candle-soft);margin-bottom:1.2rem;opacity:.85;}
+.comment-inputs{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;}
+@media(max-width:520px){.comment-inputs{grid-template-columns:1fr;}}
+.comment-form input,.comment-form textarea{width:100%;background:rgba(242,232,208,.05);border:1px solid rgba(212,175,55,.18);border-radius:10px;padding:.65rem 1rem;color:var(--text-light);font-family:'Crimson Pro',serif;font-size:.97rem;outline:none;transition:border-color .25s;resize:vertical;}
+.comment-form input:focus,.comment-form textarea:focus{border-color:rgba(212,175,55,.45);}
+.comment-form input::placeholder,.comment-form textarea::placeholder{color:rgba(196,184,152,.45);font-style:italic;}
+.comment-form textarea{min-height:110px;margin-bottom:.8rem;line-height:1.7;}
+.btn-comment{padding:.6rem 1.8rem;background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(212,175,55,.08));border:1px solid rgba(212,175,55,.35);border-radius:30px;color:var(--candle-soft);font-family:'EB Garamond',serif;font-size:.9rem;letter-spacing:.08em;cursor:pointer;transition:all .25s;}
+.btn-comment:hover{background:rgba(212,175,55,.22);border-color:rgba(212,175,55,.6);transform:translateY(-1px);}
+.comments-list{display:flex;flex-direction:column;gap:1.4rem;}
+.comment-item{background:rgba(10,20,38,.7);border:1px solid rgba(212,175,55,.1);border-radius:14px;padding:1.4rem 1.6rem;animation:fadeUp .4s ease both;position:relative;}
+.comment-item.author-reply{border-color:rgba(212,175,55,.3);background:rgba(15,26,48,.8);}
+.comment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.4rem;}
+.comment-name{font-family:'EB Garamond',serif;font-size:.88rem;color:var(--candle-soft);letter-spacing:.04em;font-weight:600;}
+.comment-name.anon{color:var(--fairy-glow);font-style:italic;}
+.author-crown{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-family:'EB Garamond',serif;letter-spacing:.08em;color:var(--candle);background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.25);border-radius:12px;padding:.15rem .6rem;}
+.comment-date{font-size:.75rem;color:rgba(196,184,152,.4);font-family:'EB Garamond',serif;}
+.comment-text{font-family:'Crimson Pro',serif;font-size:1rem;color:var(--text-muted);line-height:1.75;}
+.comment-actions{display:flex;align-items:center;gap:.8rem;margin-top:.8rem;flex-wrap:wrap;}
+.comment-like-btn{display:flex;align-items:center;gap:.35rem;background:none;border:none;cursor:pointer;font-family:'EB Garamond',serif;font-size:.8rem;color:rgba(196,184,152,.5);transition:all .2s;padding:0;}
+.comment-like-btn:hover{color:var(--rose-light);transform:scale(1.05);}
+.comment-like-btn.liked{color:var(--rose-light);}
+.comment-like-btn svg{width:13px;height:13px;}
+.comment-like-btn.liked svg{fill:var(--rose);stroke:var(--rose);}
+.comment-like-btn:not(.liked) svg{fill:none;stroke:currentColor;}
+.btn-reader-reply{display:inline-flex;align-items:center;gap:.35rem;background:none;border:none;cursor:pointer;font-family:'EB Garamond',serif;font-size:.8rem;color:rgba(122,179,212,.5);transition:all .2s;padding:0;letter-spacing:.04em;}
+.btn-reader-reply:hover{color:var(--fairy-glow);}
+.comment-delete-btn{display:flex;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;font-family:'EB Garamond',serif;font-size:.8rem;color:rgba(196,184,152,.3);transition:color .2s;padding:0;margin-left:auto;}
+.comment-delete-btn:hover{color:#f0a0a0;}
+.reply-form-wrap{margin-top:1rem;display:none;}
+.reply-form-wrap.open{display:block;}
+.reply-form-wrap textarea{width:100%;background:rgba(242,232,208,.05);border:1px solid rgba(212,175,55,.18);border-radius:10px;padding:.6rem 1rem;color:var(--text-light);font-family:'Crimson Pro',serif;font-size:.95rem;outline:none;transition:border-color .25s;resize:vertical;min-height:80px;margin-bottom:.6rem;line-height:1.6;}
+.reply-form-wrap textarea:focus{border-color:rgba(212,175,55,.45);}
+.reply-form-wrap textarea::placeholder{color:rgba(196,184,152,.4);font-style:italic;}
+.reply-form-wrap input{width:100%;background:rgba(242,232,208,.05);border:1px solid rgba(212,175,55,.18);border-radius:10px;padding:.5rem 1rem;color:var(--text-light);font-family:'Crimson Pro',serif;font-size:.9rem;outline:none;transition:border-color .25s;margin-bottom:.5rem;}
+.reply-form-wrap input::placeholder{color:rgba(196,184,152,.4);font-style:italic;}
+.reply-row{display:flex;gap:.6rem;}
+.replies-list{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(212,175,55,.08);display:flex;flex-direction:column;gap:.9rem;}
+.reply-item{border-radius:10px;padding:1rem 1.2rem;}
+.reply-item.poet-reply{background:rgba(15,26,48,.5);border:1px solid rgba(212,175,55,.15);}
+.reply-item.reader-reply{background:rgba(10,18,32,.4);border:1px solid rgba(122,179,212,.12);margin-left:1rem;}
+.no-comments{text-align:center;padding:2.5rem;font-style:italic;color:rgba(196,184,152,.4);font-family:'Crimson Pro',serif;}
+/* ABOUT */
+.about-section{padding:3rem 0 5rem;}
+.about-card{background:linear-gradient(145deg,rgba(13,30,48,.85) 0%,rgba(8,16,30,.95) 100%);border:1px solid rgba(212,175,55,.2);border-radius:20px;padding:3rem;max-width:680px;margin:0 auto;text-align:center;}
+.about-card h2{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--candle-soft);margin-bottom:1rem;}
+.about-card p{font-style:italic;color:var(--text-muted);line-height:1.9;margin-bottom:1rem;}
+.about-avatar{width:90px;height:90px;background:linear-gradient(135deg,rgba(212,175,55,.2),rgba(122,179,212,.2));border:2px solid rgba(212,175,55,.3);border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;}
+/* ADMIN */
+#page-admin{min-height:100vh;padding-bottom:6rem;}
+.admin-wrap{max-width:1000px;margin:0 auto;padding:3rem 0 0;animation:fadeUp .6s ease both;}
+.admin-login-card{max-width:420px;margin:6rem auto;background:linear-gradient(160deg,rgba(10,20,38,.97) 0%,rgba(8,14,26,.99) 100%);border:1px solid rgba(122,179,212,.25);border-radius:24px;padding:3rem 2.5rem;text-align:center;box-shadow:0 0 60px rgba(122,179,212,.05);animation:modalIn .4s ease;}
+.admin-login-card h2{font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:#b0d4ec;margin-bottom:.4rem;}
+.admin-login-card .subtitle{font-size:.9rem;color:rgba(200,216,232,.5);font-style:italic;margin-bottom:2rem;}
+.admin-login-card .admin-icon{font-size:3rem;margin-bottom:1.5rem;filter:drop-shadow(0 0 20px rgba(122,179,212,.3));}
+.admin-input{width:100%;background:rgba(122,179,212,.06);border:1px solid rgba(122,179,212,.2);border-radius:10px;padding:.75rem 1.2rem;color:#c8e0f0;font-family:'Crimson Pro',serif;font-size:1rem;outline:none;transition:border-color .25s;margin-bottom:1rem;}
+.admin-input:focus{border-color:rgba(122,179,212,.5);}
+.admin-input::placeholder{color:rgba(200,216,232,.3);font-style:italic;}
+.btn-admin-login{width:100%;padding:.9rem;background:linear-gradient(135deg,rgba(122,179,212,.2),rgba(122,179,212,.1));border:1px solid rgba(122,179,212,.35);border-radius:10px;color:#c8e4f4;font-family:'Cinzel Decorative',serif;font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:all .25s;}
+.btn-admin-login:hover{background:rgba(122,179,212,.25);transform:translateY(-1px);}
+.admin-login-error{display:none;background:rgba(180,50,50,.15);border:1px solid rgba(180,50,50,.3);border-radius:8px;padding:.6rem 1rem;font-size:.85rem;color:#f0a0a0;margin-bottom:1rem;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
+.admin-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:#b0d4ec;letter-spacing:.06em;}
+.admin-title small{display:block;font-family:'EB Garamond',serif;font-size:.8rem;color:rgba(200,216,232,.4);letter-spacing:.1em;text-transform:uppercase;font-style:normal;margin-top:.2rem;}
+.btn-admin-logout{background:none;border:1px solid rgba(196,184,152,.2);border-radius:20px;padding:.4rem 1.2rem;color:rgba(196,184,152,.5);font-family:'EB Garamond',serif;font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.06em;}
+.btn-admin-logout:hover{border-color:rgba(196,184,152,.4);color:var(--text-muted);}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.2rem;margin-bottom:3rem;}
+.stat-card{background:linear-gradient(145deg,rgba(10,20,38,.9) 0%,rgba(8,14,26,.95) 100%);border:1px solid rgba(122,179,212,.12);border-radius:16px;padding:1.4rem;text-align:center;transition:border-color .3s,transform .3s;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(122,179,212,.05) 0%,transparent 70%);pointer-events:none;}
+.stat-card:hover{border-color:rgba(122,179,212,.3);transform:translateY(-3px);}
+.stat-icon{font-size:1.6rem;margin-bottom:.5rem;}
+.stat-value{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:#b0d4ec;line-height:1;}
+.stat-label{font-family:'EB Garamond',serif;font-size:.74rem;color:rgba(200,216,232,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:.3rem;}
+.stat-sub{font-size:.68rem;color:rgba(200,216,232,.22);font-family:'EB Garamond',serif;margin-top:.15rem;font-style:italic;}
+.admin-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid rgba(122,179,212,.12);}
+.admin-tab{padding:.7rem 1.4rem;cursor:pointer;font-family:'EB Garamond',serif;font-size:.9rem;color:rgba(200,216,232,.4);transition:all .25s;border:none;background:none;border-bottom:2px solid transparent;letter-spacing:.06em;margin-bottom:-1px;}
+.admin-tab:hover{color:rgba(200,216,232,.7);}
+.admin-tab.active{color:#b0d4ec;border-bottom-color:rgba(122,179,212,.5);}
+.admin-tab-content{display:none;}.admin-tab-content.active{display:block;}
+.publish-card{background:linear-gradient(145deg,rgba(10,20,38,.9) 0%,rgba(8,14,26,.95) 100%);border:1px solid rgba(122,179,212,.12);border-radius:18px;padding:2.5rem;}
+.publish-card h3{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:#b0d4ec;margin-bottom:2rem;display:flex;align-items:center;gap:.8rem;}
+.publish-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+@media(max-width:620px){.publish-form-grid{grid-template-columns:1fr;}}
+.admin-form-group{margin-bottom:1.2rem;}
+.admin-form-group label{display:block;font-family:'EB Garamond',serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,216,232,.45);margin-bottom:.5rem;}
+.admin-form-group input,.admin-form-group select,.admin-form-group textarea{width:100%;background:rgba(122,179,212,.05);border:1px solid rgba(122,179,212,.18);border-radius:10px;padding:.7rem 1rem;color:#c8e0f0;font-family:'Crimson Pro',serif;font-size:1rem;outline:none;transition:border-color .25s;resize:vertical;}
+.admin-form-group input:focus,.admin-form-group select:focus,.admin-form-group textarea:focus{border-color:rgba(122,179,212,.45);}
+.admin-form-group select option{background:#0a1020;}
+.admin-form-group textarea{min-height:240px;line-height:1.8;}
+.admin-form-group input::placeholder,.admin-form-group textarea::placeholder{color:rgba(200,216,232,.25);font-style:italic;}
+.category-row{display:flex;gap:.6rem;align-items:flex-end;}
+.category-row select{flex:1;}
+.btn-add-cat{display:flex;align-items:center;justify-content:center;width:42px;height:42px;flex-shrink:0;background:rgba(122,179,212,.08);border:1px solid rgba(122,179,212,.25);border-radius:10px;cursor:pointer;color:var(--fairy-glow);font-size:1.3rem;transition:all .2s;}
+.btn-add-cat:hover{background:rgba(122,179,212,.15);border-color:rgba(122,179,212,.45);}
+.new-cat-row{display:none;margin-top:.5rem;gap:.6rem;align-items:center;}
+.new-cat-row.open{display:flex;}
+.new-cat-row input{flex:1;background:rgba(122,179,212,.06);border:1px solid rgba(122,179,212,.2);border-radius:8px;padding:.55rem .9rem;color:var(--fairy-glow);font-family:'Crimson Pro',serif;font-size:.95rem;outline:none;}
+.new-cat-row input::placeholder{color:rgba(122,179,212,.3);font-style:italic;}
+.new-cat-row input:focus{border-color:rgba(122,179,212,.45);}
+.btn-confirm-cat{padding:.5rem 1rem;background:rgba(122,179,212,.12);border:1px solid rgba(122,179,212,.3);border-radius:8px;color:var(--fairy-glow);font-family:'EB Garamond',serif;font-size:.82rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-confirm-cat:hover{background:rgba(122,179,212,.2);}
+.btn-publish-admin{width:100%;padding:1rem;background:linear-gradient(135deg,rgba(122,179,212,.2),rgba(122,179,212,.1));border:1px solid rgba(122,179,212,.35);border-radius:12px;color:#c8e4f4;font-family:'Cinzel Decorative',serif;font-size:.88rem;letter-spacing:.1em;cursor:pointer;transition:all .25s;margin-top:.5rem;}
+.btn-publish-admin:hover{background:rgba(122,179,212,.28);transform:translateY(-1px);}
+.poems-toolbar{display:flex;gap:.7rem;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center;}
+.tb-filter{padding:.35rem .9rem;border:1px solid rgba(122,179,212,.2);border-radius:20px;background:transparent;color:rgba(200,216,232,.5);font-family:'EB Garamond',serif;font-size:.8rem;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.tb-filter:hover,.tb-filter.active{background:rgba(122,179,212,.12);border-color:rgba(122,179,212,.4);color:#b0d4ec;}
+.tb-filter.archived-filter.active{background:rgba(232,115,138,.1);border-color:rgba(232,115,138,.3);color:var(--rose-light);}
+.poems-table{width:100%;border-collapse:collapse;}
+.poems-table th{font-family:'EB Garamond',serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,216,232,.35);padding:.6rem .8rem;border-bottom:1px solid rgba(122,179,212,.1);text-align:left;font-weight:normal;}
+.poems-table td{padding:.7rem .8rem;border-bottom:1px solid rgba(122,179,212,.06);font-family:'EB Garamond',serif;font-size:.88rem;color:rgba(200,216,232,.7);vertical-align:middle;}
+.poems-table tr:hover td{background:rgba(122,179,212,.04);}
+.poems-table tr.archived td{opacity:.45;}
+.poem-title-cell{color:#b0d4ec;font-size:.92rem;max-width:200px;word-break:break-word;}
+.cat-chip{display:inline-flex;padding:.15rem .6rem;border-radius:12px;background:rgba(122,179,212,.08);border:1px solid rgba(122,179,212,.18);color:var(--fairy-glow);font-size:.7rem;letter-spacing:.06em;}
+.feat-chip{display:inline-flex;padding:.15rem .6rem;border-radius:12px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.2);color:var(--candle);font-size:.7rem;letter-spacing:.06em;}
+.arch-chip{display:inline-flex;padding:.15rem .6rem;border-radius:12px;background:rgba(232,115,138,.08);border:1px solid rgba(232,115,138,.18);color:var(--rose-light);font-size:.7rem;letter-spacing:.06em;}
+.poem-actions{display:flex;gap:.5rem;align-items:center;}
+.btn-tbl{display:inline-flex;align-items:center;gap:.25rem;padding:.28rem .7rem;border-radius:20px;border:1px solid;font-family:'EB Garamond',serif;font-size:.75rem;cursor:pointer;transition:all .2s;background:transparent;white-space:nowrap;}
+.btn-tbl-read{border-color:rgba(122,179,212,.25);color:rgba(122,179,212,.6);}
+.btn-tbl-read:hover{background:rgba(122,179,212,.1);color:#b0d4ec;}
+.btn-tbl-edit{border-color:rgba(212,175,55,.25);color:rgba(212,175,55,.6);}
+.btn-tbl-edit:hover{background:rgba(212,175,55,.1);color:var(--candle-soft);}
+.btn-tbl-arch{border-color:rgba(232,115,138,.2);color:rgba(232,115,138,.5);}
+.btn-tbl-arch:hover{background:rgba(232,115,138,.1);color:var(--rose-light);}
+.btn-tbl-restore{border-color:rgba(122,179,212,.2);color:rgba(122,179,212,.5);}
+.btn-tbl-restore:hover{background:rgba(122,179,212,.1);color:var(--fairy-glow);}
+#edit-modal{display:none;position:fixed;inset:0;background:rgba(5,8,18,.88);z-index:200;align-items:flex-start;justify-content:center;backdrop-filter:blur(8px);overflow-y:auto;padding:2rem 1rem;}
+#edit-modal.open{display:flex;}
+.edit-modal-box{background:linear-gradient(160deg,#0d1a30 0%,#07101e 100%);border:1px solid rgba(122,179,212,.25);border-radius:22px;width:100%;max-width:680px;padding:2.5rem;animation:modalIn .3s ease;margin:auto;}
+.edit-modal-box h3{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:#b0d4ec;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;}
+.btn-modal-close{background:none;border:none;color:rgba(200,216,232,.4);font-size:1.5rem;cursor:pointer;transition:color .2s;line-height:1;}
+.btn-modal-close:hover{color:#b0d4ec;}
+.edit-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+@media(max-width:540px){.edit-form-grid{grid-template-columns:1fr;}}
+.whispers-toolbar{display:flex;gap:.7rem;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center;}
+.whispers-search{flex:1;min-width:160px;background:rgba(122,179,212,.05);border:1px solid rgba(122,179,212,.15);border-radius:20px;padding:.35rem 1rem;color:#c8e0f0;font-family:'EB Garamond',serif;font-size:.85rem;outline:none;}
+.whispers-search::placeholder{color:rgba(200,216,232,.3);font-style:italic;}
+.comments-table{width:100%;border-collapse:collapse;}
+.comments-table th{font-family:'EB Garamond',serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,216,232,.35);padding:.6rem .8rem;border-bottom:1px solid rgba(122,179,212,.1);text-align:left;font-weight:normal;}
+.comments-table td{padding:.75rem .8rem;border-bottom:1px solid rgba(122,179,212,.06);font-family:'Crimson Pro',serif;font-size:.9rem;color:rgba(200,216,232,.65);vertical-align:top;}
+.comments-table tr:hover td{background:rgba(122,179,212,.04);}
+.cmt-author{color:#b0d4ec;font-family:'EB Garamond',serif;font-size:.88rem;font-weight:600;}
+.cmt-poem{color:rgba(122,179,212,.7);font-family:'EB Garamond',serif;font-size:.78rem;}
+.cmt-text{color:rgba(200,216,232,.55);}
+.btn-reply-cmt{display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .8rem;border:1px solid rgba(212,175,55,.25);border-radius:20px;background:transparent;color:rgba(212,175,55,.6);font-family:'EB Garamond',serif;font-size:.75rem;cursor:pointer;transition:all .2s;}
+.btn-reply-cmt:hover{background:rgba(212,175,55,.1);color:var(--candle-soft);}
+.btn-del-cmt{display:inline-flex;align-items:center;gap:.3rem;padding:.28rem .8rem;border:1px solid rgba(232,115,138,.2);border-radius:20px;background:transparent;color:rgba(232,115,138,.5);font-family:'EB Garamond',serif;font-size:.75rem;cursor:pointer;transition:all .2s;}
+.btn-del-cmt:hover{background:rgba(232,115,138,.1);color:var(--rose-light);}
+.cmt-reply-count{font-size:.72rem;color:rgba(200,216,232,.3);font-family:'EB Garamond',serif;}
+#reply-modal{display:none;position:fixed;inset:0;background:rgba(5,8,18,.88);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
+#reply-modal.open{display:flex;}
+.reply-modal-box{background:linear-gradient(160deg,#0d1a30 0%,#07101e 100%);border:1px solid rgba(212,175,55,.25);border-radius:22px;width:100%;max-width:520px;padding:2.5rem;animation:modalIn .3s ease;margin:1rem;}
+.reply-modal-box h3{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--candle-soft);margin-bottom:.5rem;}
+.reply-modal-box .ctx{font-family:'Crimson Pro',serif;font-style:italic;font-size:.9rem;color:rgba(196,184,152,.5);border-left:2px solid rgba(212,175,55,.2);padding:.4rem .8rem;margin:1rem 0 1.2rem;line-height:1.6;word-break:break-word;white-space:pre-wrap;}
+.reply-modal-box textarea{width:100%;background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.2);border-radius:10px;padding:.75rem 1rem;color:var(--text-light);font-family:'Crimson Pro',serif;font-size:1rem;outline:none;transition:border-color .25s;resize:vertical;min-height:100px;line-height:1.7;}
+.reply-modal-box textarea:focus{border-color:rgba(212,175,55,.45);}
+.reply-modal-box textarea::placeholder{color:rgba(196,184,152,.35);font-style:italic;}
+.reply-modal-footer{display:flex;gap:.8rem;margin-top:1rem;justify-content:flex-end;}
+.enchanted-pagination{display:flex;justify-content:center;align-items:center;gap:.4rem;margin:2rem 0 1rem;flex-wrap:wrap;}
+.epg-stem{display:flex;align-items:center;gap:.25rem;}
+.epg-btn{position:relative;display:flex;align-items:center;justify-content:center;width:34px;height:34px;cursor:pointer;font-family:'EB Garamond',serif;font-size:.88rem;color:rgba(200,216,232,.45);transition:all .25s;background:none;border:none;border-radius:50%;}
+.epg-btn::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid rgba(122,179,212,.15);transition:all .25s;}
+.epg-btn:hover{color:#b0d4ec;}
+.epg-btn:hover::after{border-color:rgba(122,179,212,.4);background:rgba(122,179,212,.08);}
+.epg-btn.active{color:#7ab3d4;}
+.epg-btn.active::after{border-color:rgba(122,179,212,.5);background:rgba(122,179,212,.12);}
+.epg-btn.disabled{opacity:.2;cursor:default;pointer-events:none;}
+.epg-nav{display:flex;align-items:center;gap:.35rem;padding:.32rem 1rem;border:1px solid rgba(122,179,212,.15);border-radius:20px;background:transparent;font-family:'EB Garamond',serif;font-size:.78rem;color:rgba(200,216,232,.4);cursor:pointer;transition:all .25s;letter-spacing:.06em;}
+.epg-nav:hover{border-color:rgba(122,179,212,.35);color:#b0d4ec;background:rgba(122,179,212,.06);}
+.epg-nav.disabled{opacity:.2;cursor:default;pointer-events:none;}
+.epg-dots{color:rgba(122,179,212,.3);font-size:.65rem;padding:0 .25rem;letter-spacing:.15em;}
+.epg-info{font-family:'EB Garamond',serif;font-size:.75rem;color:rgba(200,216,232,.25);letter-spacing:.06em;text-align:center;margin-bottom:.5rem;}
+.grove-pagination{display:flex;justify-content:center;align-items:center;gap:.4rem;margin:1.5rem 0 4rem;flex-wrap:wrap;}
+.gpg-btn{position:relative;display:flex;align-items:center;justify-content:center;width:34px;height:34px;cursor:pointer;font-family:'EB Garamond',serif;font-size:.88rem;color:rgba(196,184,152,.5);transition:all .25s;background:none;border:none;border-radius:50%;}
+.gpg-btn::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid rgba(212,175,55,.18);transition:all .25s;}
+.gpg-btn:hover{color:var(--candle-soft);}
+.gpg-btn:hover::after{border-color:rgba(212,175,55,.45);background:rgba(212,175,55,.07);}
+.gpg-btn.active{color:var(--candle-soft);}
+.gpg-btn.active::after{border-color:var(--candle-dim);background:rgba(212,175,55,.12);}
+.gpg-btn.disabled{opacity:.25;cursor:default;pointer-events:none;}
+.gpg-nav{display:flex;align-items:center;gap:.35rem;padding:.32rem 1rem;border:1px solid rgba(212,175,55,.18);border-radius:20px;background:transparent;font-family:'EB Garamond',serif;font-size:.78rem;color:rgba(196,184,152,.5);cursor:pointer;transition:all .25s;letter-spacing:.06em;}
+.gpg-nav:hover{border-color:rgba(212,175,55,.45);color:var(--candle-soft);}
+.gpg-nav.disabled{opacity:.25;cursor:default;pointer-events:none;}
+.gpg-dots{color:rgba(212,175,55,.3);font-size:.65rem;padding:0 .25rem;letter-spacing:.15em;}
+.cmt-pagination{display:flex;justify-content:center;align-items:center;gap:.4rem;margin:1.5rem 0 .5rem;flex-wrap:wrap;}
+.toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(13,28,50,.97);border:1px solid rgba(212,175,55,.3);border-radius:30px;padding:.7rem 1.8rem;font-family:'EB Garamond',serif;font-size:.95rem;color:var(--candle-soft);opacity:0;transition:opacity .35s,transform .35s;z-index:300;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+footer{border-top:1px solid rgba(212,175,55,.12);padding:2rem 0;text-align:center;font-size:.82rem;color:rgba(196,184,152,.4);font-family:'EB Garamond',serif;letter-spacing:.06em;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes heartPop{0%{transform:scale(1)}40%{transform:scale(1.45)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+.heart-pop svg{animation:heartPop .4s ease forwards;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--forest-deep);}
+::-webkit-scrollbar-thumb{background:rgba(212,175,55,.2);border-radius:3px;}
+.view-badge{font-size:.7rem;color:rgba(200,216,232,.3);font-family:'EB Garamond',serif;display:inline-flex;align-items:center;gap:.25rem;}
+
+/* ═══════════════════════════════════════
+   MOBILE NAV — hamburger
+   ═══════════════════════════════════════ */
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;cursor:pointer;border:none;background:none;padding:0;z-index:100;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--candle-soft);border-radius:2px;transition:all .3s ease;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.nav-mobile-drawer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,14,8,.97);z-index:90;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;backdrop-filter:blur(12px);}
+.nav-mobile-drawer.open{display:flex;}
+.nav-mobile-drawer a{font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--text-muted);text-decoration:none;letter-spacing:.08em;cursor:pointer;padding:.5rem 1.5rem;border-bottom:1px solid rgba(212,175,55,.1);width:200px;text-align:center;transition:color .3s;}
+.nav-mobile-drawer a:hover,.nav-mobile-drawer a.active{color:var(--candle-soft);}
+.nav-mobile-drawer .mobile-admin-link{font-size:1rem;color:var(--sapphire);border:1px solid rgba(122,179,212,.2);border-radius:20px;margin-top:.5rem;}
+
+/* ═══════════════════════════════════════
+   MOBILE BREAKPOINTS
+   ═══════════════════════════════════════ */
+@media(max-width:768px){
+  /* base */
+  body{font-size:16px;}
+  #app{padding:0 1rem;}
+
+  /* landscape: fix height on mobile so mountains stay tall & prominent;
+     SVG will be wider than screen but centered — mountains never shrink */
+  .landscape-bg{
+    width:auto !important;
+    height:360px !important;
+    left:50% !important;
+    transform:translateX(-50%);
+    min-height:unset;
+    opacity:.65;
+  }
+
+  /* nav */
+  nav{padding:1rem 0;}
+  .nav-brand{font-size:.85rem;}
+  .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
+
+  /* hero */
+  .hero{padding:3rem 0 2.5rem;}
+  .hero-eyebrow{font-size:1.1rem;}
+  .hero-title{font-size:clamp(1.8rem,7vw,2.8rem);line-height:1.25;}
+  .hero-sub{font-size:1rem;margin-bottom:2rem;}
+  .ornament{font-size:1.1rem;letter-spacing:.3rem;margin:1rem 0;}
+
+  /* search */
+  .search-bar{flex-direction:column;gap:.7rem;margin-bottom:1.2rem;}
+  .search-bar input{padding:.75rem 1.2rem;font-size:1rem;border-radius:14px;}
+
+  /* tags */
+  .tags{gap:.5rem;margin-bottom:2rem;}
+  .tag{font-size:.85rem;padding:.4rem 1rem;}
+
+  /* section title */
+  .section-title{font-size:.95rem;}
+
+  /* poem grid */
+  .poems-grid{grid-template-columns:1fr;gap:1.2rem;}
+  .poem-card{padding:1.5rem 1.2rem;border-radius:14px;}
+  .poem-card h3{font-size:1rem;}
+  .poem-preview{font-size:.95rem;}
+  .poem-meta{font-size:.8rem;}
+
+  /* featured card stacks on mobile */
+  .poem-card.featured{grid-template-columns:1fr;gap:1rem;}
+  .poem-illustration{display:none;}
+  .poem-card.featured h3{font-size:1.2rem;}
+
+  /* pagination */
+  .grove-pagination{gap:.3rem;margin:1rem 0 3rem;}
+  .pg-leaf,.gpg-btn{width:34px;height:34px;font-size:.85rem;}
+  .pg-nav,.gpg-nav{font-size:.75rem;padding:.3rem .7rem;}
+
+  /* poem reading */
+  .poem-reading-wrap{padding:1.5rem 0 0;}
+  .reading-title{font-size:clamp(1.4rem,5.5vw,2rem);}
+  .poem-full-text{font-size:1.05rem;line-height:2;padding-left:1.2rem;border-left-width:2px;}
+  .like-bar{flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem;}
+  .like-btn{padding:.5rem 1rem;font-size:.9rem;}
+  .ornament-reading{margin:1.5rem 0;}
+
+  /* comments */
+  .comments-section{margin-top:2.5rem;padding-top:2rem;}
+  .comment-form{padding:1.2rem 1rem;}
+  .comment-inputs{grid-template-columns:1fr;}
+  .comment-form input,.comment-form textarea{font-size:16px;/* prevents iOS zoom */padding:.7rem 1rem;}
+  .comment-item{padding:1rem 1rem;}
+  .reply-form-wrap textarea,.reply-form-wrap input{font-size:16px;}
+  .reply-row{flex-direction:column;}
+  .btn-comment{font-size:.9rem;padding:.65rem 1.4rem;}
+
+  /* about */
+  .about-card{padding:2rem 1.2rem;border-radius:16px;}
+  .about-card h2{font-size:1.3rem;}
+  .about-avatar{width:72px;height:72px;font-size:2rem;}
+
+  /* admin login */
+  .admin-login-card{padding:2rem 1.5rem;margin:3rem auto;}
+  .admin-wrap{padding:1.5rem 0 0;}
+  .admin-header{margin-bottom:1.2rem;gap:.6rem;}
+  .admin-title{font-size:1.1rem;}
+  .admin-title small{font-size:.7rem;}
+  .btn-admin-logout{font-size:.75rem;padding:.35rem .9rem;}
+
+  /* admin dashboard — stats */
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1.5rem;}
+  .stat-card{padding:.75rem .5rem;border-radius:12px;}
+  .stat-card:hover{transform:none;}
+  .stat-icon{font-size:1.1rem;margin-bottom:.25rem;}
+  .stat-value{font-size:1.15rem;line-height:1.1;}
+  .stat-label{font-size:.62rem;letter-spacing:.08em;margin-top:.2rem;}
+  .stat-sub{font-size:.58rem;margin-top:.1rem;}
+  .admin-tabs{gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .admin-tab{padding:.6rem 1rem;font-size:.82rem;white-space:nowrap;}
+  .publish-card{padding:1.4rem 1rem;}
+  .publish-form-grid{grid-template-columns:1fr;}
+  .admin-form-group input,.admin-form-group select,.admin-form-group textarea{font-size:16px;/* prevents iOS zoom */}
+  .admin-form-group textarea{min-height:200px;}
+
+  /* tables scroll horizontally */
+  .poems-table,.comments-table{font-size:.8rem;}
+  .poems-table th,.comments-table th{font-size:.65rem;padding:.5rem .5rem;}
+  .poems-table td,.comments-table td{padding:.6rem .5rem;}
+  .btn-tbl{font-size:.7rem;padding:.25rem .5rem;}
+  .poem-actions{flex-wrap:wrap;gap:.3rem;}
+
+  /* modals full-screen on mobile */
+  #edit-modal{padding:1rem .5rem;}
+  .edit-modal-box{padding:1.5rem 1.2rem;border-radius:18px;}
+  .edit-form-grid{grid-template-columns:1fr;}
+  .reply-modal-box{padding:1.5rem 1.2rem;border-radius:18px;}
+
+  /* footer */
+  footer{padding:1.5rem 0;font-size:.78rem;}
+
+  /* toast */
+  .toast{bottom:1.5rem;font-size:.88rem;padding:.6rem 1.4rem;max-width:85vw;text-align:center;}
+}
+
+@media(max-width:400px){
+  body{font-size:15px;}
+  #app{padding:0 .8rem;}
+  .hero-title{font-size:1.65rem;}
+  .hero-eyebrow{font-size:.95rem;}
+  .nav-brand{font-size:.78rem;}
+  .poem-card{padding:1.2rem 1rem;}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:.4rem;}
+  .stat-card{padding:.6rem .35rem;border-radius:10px;}
+  .stat-icon{font-size:1rem;}
+  .stat-value{font-size:1rem;}
+  .stat-label{font-size:.58rem;}
+  .stat-sub{display:none;}
+  .reading-title{font-size:1.35rem;}
+  .poem-full-text{font-size:1rem;padding-left:1rem;}
+}
+
+/* Touch-friendly tap targets */
+@media(pointer:coarse){
+  .tag,.pg-nav,.pg-leaf,.gpg-btn,.gpg-nav,.card-heart,.like-btn,
+  .btn-comment,.back-btn,.admin-tab,.tb-filter{
+    min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;
+  }
+  .tag,.tb-filter,.pg-nav,.gpg-nav{min-height:40px;}
+  .back-btn{min-height:44px;min-width:auto;padding:.5rem .2rem;}
+  .nav-hamburger{min-height:44px;min-width:44px;}
+}
+
+/* ─── Ultra-wide: SVG is width:100% height:auto — naturally full width, no crop ─── */
+@media(min-width:2400px){
+  .landscape-bg{opacity:.6;}
+}
+
+/* ─── Very small screens: keep mountains tall ─── */
+@media(max-width:400px){
+  .landscape-bg{height:300px !important;}
+}
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<canvas id="firefly-canvas"></canvas>
+<svg class="landscape-bg" viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Layer 1: Farthest mountains — palest indigo, atmospheric haze -->
+  <path d="M0 320 Q80 180 160 210 Q240 240 300 170 Q360 100 440 150 Q520 200 580 130 Q640 60 720 110 Q800 160 860 90 Q920 20 1000 80 Q1080 140 1140 100 Q1200 60 1280 120 Q1360 180 1440 150 L1440 500 L0 500 Z" fill="#1a1f3a" opacity="0.55"/>
+  <!-- Layer 2: Second mountain range — deeper indigo violet -->
+  <path d="M0 360 Q60 240 130 270 Q200 300 270 220 Q340 140 420 200 Q500 260 560 190 Q620 120 700 175 Q780 230 840 160 Q900 90 980 155 Q1060 220 1120 175 Q1180 130 1250 185 Q1320 240 1380 210 Q1420 195 1440 200 L1440 500 L0 500 Z" fill="#1e1b3f" opacity="0.65"/>
+  <!-- Layer 3: Mid mountains — warm indigo/lavender -->
+  <path d="M0 390 Q50 300 110 320 Q170 340 230 270 Q290 200 370 255 Q450 310 510 250 Q570 190 640 240 Q710 290 770 230 Q830 170 910 230 Q990 290 1050 245 Q1110 200 1180 260 Q1250 320 1310 285 Q1370 250 1440 270 L1440 500 L0 500 Z" fill="#231e4a" opacity="0.75"/>
+  <!-- Layer 4: Closer peaks — rich deep indigo -->
+  <path d="M0 420 Q40 355 90 370 Q140 385 190 330 Q240 275 310 315 Q380 355 430 295 Q480 235 550 285 Q620 335 675 275 Q730 215 800 275 Q870 335 930 285 Q990 235 1060 295 Q1130 355 1185 310 Q1240 265 1300 310 Q1360 355 1440 330 L1440 500 L0 500 Z" fill="#1c1842" opacity="0.85"/>
+  <!-- Layer 5: Near ridge with pine tree silhouettes — darkest -->
+  <!-- Pine trees: groups of triangles on a base ridge -->
+  <path d="M0 460 Q200 430 400 440 Q600 450 800 435 Q1000 420 1200 432 Q1320 440 1440 438 L1440 500 L0 500 Z" fill="#13103a"/>
+  <!-- Pine tree silhouettes: left section -->
+  <polygon points="-10,460 6,412 22,460" fill="#0e0c30"/>
+  <polygon points="5,460 23,405 41,460" fill="#0e0c30"/>
+  <polygon points="20,460 40,395 60,460" fill="#0c0a2e"/>
+  <polygon points="38,460 58,408 78,460" fill="#0e0c30"/>
+  <polygon points="58,460 80,390 102,460" fill="#0c0a2e"/>
+  <polygon points="80,460 103,400 126,460" fill="#0e0c30"/>
+  <polygon points="108,460 132,385 156,460" fill="#0c0a2e"/>
+  <polygon points="140,460 166,395 192,460" fill="#0e0c30"/>
+  <polygon points="175,460 200,402 225,460" fill="#0c0a2e"/>
+  <polygon points="212,460 238,388 264,460" fill="#0e0c30"/>
+  <polygon points="248,460 276,398 304,460" fill="#0c0a2e"/>
+  <polygon points="288,460 315,385 342,460" fill="#0e0c30"/>
+  <polygon points="325,460 352,393 379,460" fill="#0c0a2e"/>
+  <!-- inner layer triangles for depth -->
+  <polygon points="10,460 24,422 38,460" fill="#130f38"/>
+  <polygon points="45,460 61,414 77,460" fill="#130f38"/>
+  <polygon points="90,460 108,402 126,460" fill="#130f38"/>
+  <polygon points="160,460 178,408 196,460" fill="#130f38"/>
+  <!-- Pine tree silhouettes: mid section -->
+  <polygon points="360,460 388,382 416,460" fill="#0c0a2e"/>
+  <polygon points="400,460 428,392 456,460" fill="#0e0c30"/>
+  <polygon points="442,460 470,378 498,460" fill="#0c0a2e"/>
+  <polygon points="482,460 510,388 538,460" fill="#0e0c30"/>
+  <polygon points="522,460 552,375 582,460" fill="#0c0a2e"/>
+  <polygon points="565,460 595,386 625,460" fill="#0e0c30"/>
+  <polygon points="610,460 640,380 670,460" fill="#0c0a2e"/>
+  <polygon points="655,460 685,390 715,460" fill="#0e0c30"/>
+  <polygon points="700,460 730,376 760,460" fill="#0c0a2e"/>
+  <polygon points="745,460 775,386 805,460" fill="#0e0c30"/>
+  <polygon points="790,460 820,378 850,460" fill="#0c0a2e"/>
+  <polygon points="835,460 865,388 895,460" fill="#0e0c30"/>
+  <!-- second tier mid trees -->
+  <polygon points="375,460 398,402 421,460" fill="#130f38"/>
+  <polygon points="460,460 484,396 508,460" fill="#130f38"/>
+  <polygon points="548,460 572,394 596,460" fill="#130f38"/>
+  <polygon points="636,460 660,396 684,460" fill="#130f38"/>
+  <polygon points="724,460 748,400 772,460" fill="#130f38"/>
+  <polygon points="812,460 836,394 860,460" fill="#130f38"/>
+  <!-- Pine tree silhouettes: right section -->
+  <polygon points="876,460 908,375 940,460" fill="#0c0a2e"/>
+  <polygon points="922,460 954,383 986,460" fill="#0e0c30"/>
+  <polygon points="968,460 1000,372 1032,460" fill="#0c0a2e"/>
+  <polygon points="1014,460 1046,382 1078,460" fill="#0e0c30"/>
+  <polygon points="1060,460 1092,374 1124,460" fill="#0c0a2e"/>
+  <polygon points="1106,460 1138,382 1170,460" fill="#0e0c30"/>
+  <polygon points="1152,460 1184,376 1216,460" fill="#0c0a2e"/>
+  <polygon points="1198,460 1230,385 1262,460" fill="#0e0c30"/>
+  <polygon points="1244,460 1276,378 1308,460" fill="#0c0a2e"/>
+  <polygon points="1290,460 1322,386 1354,460" fill="#0e0c30"/>
+  <polygon points="1336,460 1368,374 1400,460" fill="#0c0a2e"/>
+  <polygon points="1382,460 1411,382 1440,460" fill="#0e0c30"/>
+  <!-- second tier right trees -->
+  <polygon points="895,460 918,398 941,460" fill="#130f38"/>
+  <polygon points="984,460 1008,394 1032,460" fill="#130f38"/>
+  <polygon points="1074,460 1098,396 1122,460" fill="#130f38"/>
+  <polygon points="1162,460 1186,398 1210,460" fill="#130f38"/>
+  <polygon points="1252,460 1276,400 1300,460" fill="#130f38"/>
+  <polygon points="1342,460 1364,396 1386,460" fill="#130f38"/>
+  <!-- Foreground ridge fill -->
+  <rect x="0" y="460" width="1440" height="40" fill="#0e0c30"/>
+</svg>
+
+<div id="app">
+  <nav>
+    <div class="nav-brand" onclick="showPage('home');closeMobileNav()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 2C20 2 14 4 12 10C10 16 12 22 12 22C12 22 8 18 6 18C4 18 2 20 2 20C2 20 4 14 8 12C12 10 16 10 16 10C16 10 12 12 10 16"/><path d="M12 22L10 19"/></svg>
+      ᜉᜓᜁᜆ᜔ᜍᜒᜁ
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" id="nav-home" class="active">Verses</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">The Poet</a></li>
+      <li><a onclick="showPage('admin')" id="nav-admin" class="admin-nav-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Writer
+      </a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="nav-mobile-drawer" id="nav-mobile-drawer">
+    <a onclick="showPage('home');closeMobileNav()" id="mnav-home" class="active">Verses</a>
+    <a onclick="showPage('about');closeMobileNav()" id="mnav-about">The Poet</a>
+    <a onclick="showPage('admin');closeMobileNav()" id="mnav-admin" class="mobile-admin-link">✦ Writer's Sanctum</a>
+  </div>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <section class="hero">
+      <div class="hero-eyebrow">✦ where words weave worlds ✦</div>
+      <h1 class="hero-title">ᜉᜓᜈ᜔ᜎ ᜅ᜔ ᜉᜈᜓᜎᜀᜈ᜔</h1>
+      <p class="hero-sub">Tahakin ang pusod ng punong panulaan, kung saan ang bawat tula ay lagusan patungo sa makabuluhang gunita na hindi nararating ng karaniwang paningin; binibigkas sa ningas ng tanglaw at iniuukit sa malamlam na panulat na punla.</p>
+      <span class="ornament">· ✦ · ✦ · ✦ ·</span>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search poems, themes, words…" oninput="filterPoems()">
+      </div>
+      <div class="tags" id="tags-container"></div>
+    </section>
+    <main>
+      <div class="section-title">Recent Poems</div>
+      <div class="poems-grid" id="poems-grid"></div>
+      <div class="grove-pagination" id="grove-pagination"></div>
+    </main>
+  </div>
+
+  <!-- POEM READING PAGE -->
+  <div id="page-poem" class="page">
+    <div class="poem-reading-wrap" id="poem-reading-wrap"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="page-about" class="page">
+    <section class="about-section">
+      <span class="ornament" style="display:block;text-align:center;padding-top:3rem;">· ✦ · ✦ · ✦ ·</span>
+      <div class="about-card">
+        <div class="about-avatar">🌿</div>
+        <h2>The Poet Behind the Quill</h2>
+        <p>Welcome, wanderer. I am a writer who finds magic in the quiet spaces between words — in the hush of forests, the shimmer of starlight, the warmth of a candle burning long past midnight.</p>
+        <p>These poems are my letters to worlds unseen — to the Narnia that waits past the wardrobe, to the Middle-earth paths not taken, to every fairy that has ever danced just out of sight.</p>
+        <p>Pull up a mossy log, wrap yourself in a warm cloak, and stay a while. There is always room for one more reader in this enchanted grove.</p>
+        <span class="ornament">· ✦ ·</span>
+        <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;font-style:normal;font-family:'EB Garamond',serif;">New poems added whenever the muse visits ✦</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ADMIN PAGE -->
+  <div id="page-admin" class="page">
+    <div class="admin-wrap">
+      <div id="admin-login-state">
+        <div class="admin-login-card">
+          <div class="admin-icon">🔮</div>
+          <h2>Writer's Sanctum</h2>
+          <p class="subtitle">Enter your passphrase, dear poet</p>
+          <div class="admin-login-error" id="admin-login-error">The passphrase is not quite right, dear traveller.</div>
+          <input type="password" class="admin-input" id="admin-password" placeholder="Enter your secret word…" onkeydown="if(event.key==='Enter')tryAdminLogin()">
+          <button class="btn-admin-login" onclick="tryAdminLogin()">✦ Open the Sanctum</button>
+          <p style="margin-top:1.2rem;font-size:.78rem;color:rgba(200,216,232,.3);cursor:pointer;font-family:'EB Garamond',serif;" onclick="showPage('home')">← Return to the grove</p>
+        </div>
+      </div>
+      <div id="admin-dashboard-state" style="display:none;">
+        <div class="admin-header">
+          <div>
+            <div class="admin-title">Writer's Sanctum<small>✦ The Enchanted Quill — Admin</small></div>
+          </div>
+          <button class="btn-admin-logout" onclick="logoutAdmin()">Seal the gate & leave</button>
+        </div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchAdminTab('publish',this)">✦ Compose</button>
+          <button class="admin-tab" onclick="switchAdminTab('poems',this)">Poems</button>
+          <button class="admin-tab" onclick="switchAdminTab('comments',this)">Whispers</button>
+        </div>
+        <!-- COMPOSE TAB -->
+        <div class="admin-tab-content active" id="atab-publish">
+          <div class="publish-card">
+            <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b0d4ec" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Compose & Publish</h3>
+            <div class="publish-form-grid">
+              <div class="admin-form-group">
+                <label>Poem Title</label>
+                <input type="text" id="poem-title" placeholder="Give your poem a name…">
+              </div>
+              <div class="admin-form-group">
+                <label>Featured?</label>
+                <select id="poem-featured">
+                  <option value="no">No — place in the grove</option>
+                  <option value="yes">Yes — show at the top</option>
+                </select>
+              </div>
+            </div>
+            <div class="admin-form-group">
+              <label>Category</label>
+              <div class="category-row">
+                <select id="poem-category"></select>
+                <button class="btn-add-cat" onclick="toggleNewCatRow()" title="Add new category">＋</button>
+              </div>
+              <div class="new-cat-row" id="new-cat-row">
+                <input type="text" id="new-cat-input" placeholder="New category name…" onkeydown="if(event.key==='Enter')confirmNewCategory()">
+                <button class="btn-confirm-cat" onclick="confirmNewCategory()">Add</button>
+              </div>
+            </div>
+            <div class="admin-form-group">
+              <label>Your Poem</label>
+              <textarea id="poem-body" placeholder="Write your verses here…&#10;Line by line,&#10;word by word…"></textarea>
+            </div>
+            <button class="btn-publish-admin" onclick="publishPoem()">✦ Release into the Grove</button>
+          </div>
+        </div>
+        <!-- POEMS TAB -->
+        <div class="admin-tab-content" id="atab-poems">
+          <div class="poems-toolbar" id="poems-toolbar">
+            <span style="font-family:'EB Garamond',serif;font-size:.8rem;color:rgba(200,216,232,.35);letter-spacing:.08em;">Filter:</span>
+            <button class="tb-filter active" onclick="setPoemFilter('all',this)">All</button>
+            <button class="tb-filter" onclick="setPoemFilter('featured',this)">✦ Featured</button>
+            <button class="tb-filter archived-filter" onclick="setPoemFilter('archived',this)">Archived</button>
+            <span id="cat-filter-btns"></span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="poems-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>👁</th><th>♡</th><th>💬</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="poems-tbody"></tbody>
+            </table>
+          </div>
+          <div class="enchanted-pagination" id="poems-pagination"></div>
+        </div>
+        <!-- WHISPERS TAB -->
+        <div class="admin-tab-content" id="atab-comments">
+          <div class="whispers-toolbar">
+            <input type="text" class="whispers-search" id="cmt-search" placeholder="Search whispers…" oninput="renderAdminComments()">
+            <button class="tb-filter active" onclick="setCmtFilter('all',this)">All</button>
+            <button class="tb-filter" onclick="setCmtFilter('noreplies',this)">Awaiting Reply</button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="comments-table">
+              <thead>
+                <tr>
+                  <th>Wanderer</th>
+                  <th>On Poem</th>
+                  <th>Whisper</th>
+                  <th>Date</th>
+                  <th>♡</th><th>Replies</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="comments-tbody"></tbody>
+            </table>
+          </div>
+          <div class="enchanted-pagination" id="comments-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>✦ The Enchanted Quill · A Poetry Sanctuary ✦</p>
+    <p style="margin-top:.3rem;">Woven with words & wonder</p>
+  </footer>
+</div>
+
+<!-- EDIT POEM MODAL -->
+<div id="edit-modal">
+  <div class="edit-modal-box">
+    <h3>
+      <span>✦ Edit Verse</span>
+      <button class="btn-modal-close" onclick="closeEditModal()">×</button>
+    </h3>
+    <div class="edit-form-grid">
+      <div class="admin-form-group">
+        <label>Title</label>
+        <input type="text" id="edit-title" placeholder="Poem title…">
+      </div>
+      <div class="admin-form-group">
+        <label>Featured?</label>
+        <select id="edit-featured">
+          <option value="no">No</option>
+          <option value="yes">Yes — featured</option>
+        </select>
+      </div>
+    </div>
+    <div class="admin-form-group">
+      <label>Category</label>
+      <div class="category-row">
+        <select id="edit-category" style="flex:1;background:rgba(122,179,212,.05);border:1px solid rgba(122,179,212,.18);border-radius:10px;padding:.7rem 1rem;color:#c8e0f0;font-family:'Crimson Pro',serif;font-size:1rem;outline:none;"></select>
+        <button class="btn-add-cat" onclick="toggleNewCatRow('edit')" title="Add new category">＋</button>
+      </div>
+      <div class="new-cat-row" id="new-cat-row-edit">
+        <input type="text" id="new-cat-input-edit" placeholder="New category name…" onkeydown="if(event.key==='Enter')confirmNewCategory('edit')">
+        <button class="btn-confirm-cat" onclick="confirmNewCategory('edit')">Add</button>
+      </div>
+    </div>
+    <div class="admin-form-group">
+      <label>Poem</label>
+      <textarea id="edit-body" style="min-height:260px;line-height:1.8;background:rgba(122,179,212,.05);border:1px solid rgba(122,179,212,.18);border-radius:10px;padding:.7rem 1rem;color:#c8e0f0;font-family:'Crimson Pro',serif;font-size:1rem;outline:none;resize:vertical;width:100%;"></textarea>
+    </div>
+    <div style="display:flex;gap:.8rem;justify-content:flex-end;">
+      <button class="btn-tbl btn-tbl-edit" style="padding:.6rem 1.4rem;font-size:.85rem;" onclick="saveEditPoem()">✦ Save Changes</button>
+      <button class="btn-tbl btn-tbl-read" style="padding:.6rem 1.4rem;font-size:.85rem;opacity:.6;" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- REPLY MODAL -->
+<div id="reply-modal">
+  <div class="reply-modal-box">
+    <h3>✦ Reply as The Poet</h3>
+    <div class="ctx" id="reply-modal-ctx"></div>
+    <textarea id="reply-modal-text" placeholder="Compose your reply, dear poet…"></textarea>
+    <div class="reply-modal-footer">
+      <button class="btn-comment" style="opacity:.5;font-size:.85rem;" onclick="closeReplyModal()">Cancel</button>
+      <button class="btn-comment" style="font-size:.85rem;" onclick="submitPoetReply()">✦ Send into the Grove</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function heartSVG(){return`<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;}
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function fmtDate(d){return new Date(d).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});}
+function nowStr(){return fmtDate(new Date());}
+
+// ═══════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════
+const WRITER_PASS='moonlit123';
+let isWriter=false;
+let currentPoemId=null;
+let replyTargetPoemId=null, replyTargetCommentId=null;
+let editingPoemId=null;
+
+const DEFAULT_CATEGORIES=['Nature','Magic','Stars','Forest','Seasons','Dreams','Love','Solitude'];
+const defaultPoems=[
+  {id:1,title:'The Door in the Wardrobe',category:'Magic',featured:true,date:'June 1, 2025',updatedDate:null,archived:false,
+   body:`There is a door at the back of the wardrobe\nwhere the coats grow thin and the cold grows bright,\nwhere the smell of mothballs fades to pine\nand the floor gives way to snow.\n\nI have stood there many times,\none foot in the cedar dark,\none foot in that impossible light,\nwondering whether I am brave enough\nto let the wood close behind me.\n\nThe lamppost hums a quiet hymn.\nA faun leaves footprints in the white.\nSomething old is waiting, golden-maned,\nbeyond the hedge, beyond the night.\n\nOne day I will stop hesitating.\nOne day I will walk all the way through.\nBut for now I press my palms to the cold bark\nand breathe in what might be true.`},
+  {id:2,title:'Shire-Light',category:'Nature',featured:false,date:'May 18, 2025',updatedDate:null,archived:false,
+   body:`Between the hills that hum with green\nwhere smoke curls soft from chimney-stone,\nthere is a quiet I have never known\nin any city street or waking dream.\n\nThe sunflowers lean toward the lane.\nA kettle sings behind a yellow door.\nThe whole wide world with all its weight and war\nfeels very far from here, and very plain.\n\nGive me this: the unhurried afternoon,\nthe pipe-smoke drifting, the bread cooling slow,\nthe kind of courage born in small things—\nto love your home and still choose to go.`},
+  {id:3,title:'Moth Wing Gospel',category:'Dreams',featured:false,date:'May 3, 2025',updatedDate:null,archived:false,
+   body:`A moth does not mourn the candle.\nShe circles it the way devotion circles a name—\nnot because she cannot leave,\nbut because she has chosen, once,\nto love a thing brighter than herself.\n\nI understand her now.\nI have flown toward certain lights\nknowing I would be changed at the edge of them,\nknowing I would return with singed edges,\nknowing I would call it worth it.\n\nThis is the moth wing gospel:\nnot safety, but the reaching.\nNot survival, but the glow.`},
+  {id:4,title:'Letters to Rivendell',category:'Magic',featured:false,date:'April 22, 2025',updatedDate:null,archived:false,
+   body:`I write to you from a world that forgot\nhow to listen to rivers.\nHow to read the language of stone.\nHow to build a house that knows\nit is part of something older than itself.\n\nIn Rivendell, they say,\nthe elves still sing to the evening star.\nThe Last Homely House holds its breath\nbetween one age and the next,\nwaiting for travellers like me\nwho arrive road-worn and wonder-stripped\nand are healed by nothing more\nthan sitting still in a beautiful place.\n\nI am trying to build one in my chest.\nA room at the end of a long road\nwhere something ancient plays softly\nand the light is always autumn-gold.`},
+  {id:5,title:'What the Fireflies Know',category:'Forest',featured:false,date:'April 8, 2025',updatedDate:null,archived:false,
+   body:`They do not light themselves for us.\nWe only think they do—\nthe way we watch the night sky and believe\nthe stars have something to say to you.\n\nA firefly blinks and the forest answers.\nA signal in the old tongue: here, here, here.\nNot loneliness. Not longing.\nJust the fact of being, made visible\nfor the space of a breath.\n\nI want to learn this language.\nI want to say: I am here\nwithout needing it to mean anything\nexcept the simple fact of light.`},
+  {id:6,title:'An Inventory of Small Magics',category:'Seasons',featured:false,date:'March 30, 2025',updatedDate:null,archived:false,
+   body:`One: the way steam rises from tea\nin the cold morning, speaking winter's name.\n\nTwo: the sound a key makes\nin the lock of an old house—\nmechanical, unhurried, inevitable.\n\nThree: any bird that returns in April\nas if it never doubted it would.\n\nFour: the handwriting of someone\nwho is gone but whose letters survive.\n\nFive: the way a library smells\nlike every story that has ever been told.\n\nSix: you, reading this,\nwherever you are.\nThe simple magic of two minds\nmeeting in the middle of a poem.`}
+];
+
+function loadPoems(){const s=localStorage.getItem('eq_poems');if(!s)return defaultPoems.map(p=>({...p,archived:false,updatedDate:null}));try{return JSON.parse(s).map(p=>({archived:false,updatedDate:null,...p}));}catch{return defaultPoems;}}
+function savePoems(p){localStorage.setItem('eq_poems',JSON.stringify(p));}
+let poems=loadPoems();
+
+function loadLikes(){const s=localStorage.getItem('eq_likes');return s?JSON.parse(s):{};}
+function saveLikes(l){localStorage.setItem('eq_likes',JSON.stringify(l));}
+let likes=loadLikes();
+
+function loadUserLiked(){const s=localStorage.getItem('eq_userliked');return s?JSON.parse(s):[];}
+function saveUserLiked(a){localStorage.setItem('eq_userliked',JSON.stringify(a));}
+let userLiked=loadUserLiked();
+
+function loadComments(){const s=localStorage.getItem('eq_comments');return s?JSON.parse(s):{};}
+function saveComments(c){localStorage.setItem('eq_comments',JSON.stringify(c));}
+let allComments=loadComments();
+
+function loadViews(){const s=localStorage.getItem('eq_views');return s?JSON.parse(s):{};}
+function saveViews(v){localStorage.setItem('eq_views',JSON.stringify(v));}
+let views=loadViews();
+function recordView(id){views[id]=(views[id]||0)+1;saveViews(views);}
+function getViewCount(id){return views[id]||0;}
+
+function loadCategories(){const s=localStorage.getItem('eq_categories');if(s)return JSON.parse(s);const fromPoems=[...new Set(poems.map(p=>p.category))];return[...new Set([...DEFAULT_CATEGORIES,...fromPoems])];}
+function saveCategories(c){localStorage.setItem('eq_categories',JSON.stringify(c));}
+let categories=loadCategories();
+
+function getLikeCount(id){return likes[id]||0;}
+function isLiked(id){return userLiked.includes(id);}
+
+let readerId=null;
+function getReaderId(){if(readerId)return readerId;let id=localStorage.getItem('eq_reader_id');if(!id){id=Math.random().toString(36).slice(2);localStorage.setItem('eq_reader_id',id);}readerId=id;return id;}
+
+// ═══════════════════════════════════════
+// READER GRID  (paginated, 6 per page)
+// ═══════════════════════════════════════
+const GRID_PER_PAGE=6;
+let gridPage=1;
+let activeTag='All';
+
+function renderTags(){
+  const container=document.getElementById('tags-container');
+  const cats=['All',...new Set(poems.filter(p=>!p.archived).map(p=>p.category))];
+  container.innerHTML=cats.map(t=>`<span class="tag${t===activeTag?' active':''}" onclick="setTag('${t}')">${t}</span>`).join('');
+}
+function setTag(t){activeTag=t;gridPage=1;renderTags();renderGrid();}
+function filterPoems(){gridPage=1;renderGrid();}
+
+function getFilteredPoems(){
+  const query=(document.getElementById('search-input')?.value||'').toLowerCase();
+  return poems.filter(p=>{
+    if(p.archived)return false;
+    const matchTag=activeTag==='All'||p.category===activeTag;
+    const matchQ=!query||p.title.toLowerCase().includes(query)||p.body.toLowerCase().includes(query)||p.category.toLowerCase().includes(query);
+    return matchTag&&matchQ;
+  });
+}
+
+function renderGrid(){
+  const filtered=getFilteredPoems();
+  const sorted=[...filtered.filter(p=>p.featured),...filtered.filter(p=>!p.featured)];
+  const total=sorted.length;
+  const totalPages=Math.max(1,Math.ceil(total/GRID_PER_PAGE));
+  if(gridPage>totalPages)gridPage=totalPages;
+  const start=(gridPage-1)*GRID_PER_PAGE;
+  const page=sorted.slice(start,start+GRID_PER_PAGE);
+  const grid=document.getElementById('poems-grid');
+  if(!page.length){grid.innerHTML=`<p style="color:var(--text-muted);font-style:italic;grid-column:1/-1;text-align:center;padding:3rem 0;">No poems found in this part of the grove…</p>`;document.getElementById('grove-pagination').innerHTML='';return;}
+  grid.innerHTML=page.map((p,i)=>p.featured?featuredCard(p,i):poemCard(p,i)).join('');
+  renderGrovePagination(totalPages,'grove-pagination','gpg',p=>setGridPage(p));
+}
+
+function setGridPage(p){gridPage=p;renderGrid();window.scrollTo({top:document.getElementById('poems-grid').offsetTop-80,behavior:'smooth'});}
+
+function poemPreview(body){return body.split('\n').filter(l=>l.trim()).slice(0,4).join('\n');}
+
+function poemCard(p,i){
+  const lc=getLikeCount(p.id),liked=isLiked(p.id),cc=(allComments[p.id]||[]).length;
+  return`<div class="poem-card" style="animation-delay:${i*.07}s">
+    <div onclick="openPoemPage(${p.id})" style="flex:1;display:flex;flex-direction:column;cursor:pointer;">
+      <div class="poem-tag">${p.category}</div><h3>${p.title}</h3>
+      <div class="poem-preview">${poemPreview(p.body)}</div>
+    </div>
+    <div class="poem-meta">
+      <div class="poem-meta-left">
+        <button class="card-heart ${liked?'liked':''}" onclick="toggleLike(event,${p.id})">${heartSVG()}</button>
+        <span id="lc-${p.id}">${lc>0?lc:''}</span>
+        ${cc>0?`<span style="font-size:.75rem;color:rgba(196,184,152,.4);font-family:'EB Garamond',serif;">💬 ${cc}</span>`:''}
+      </div>
+      <span class="read-link" onclick="openPoemPage(${p.id})">Read ›</span>
+    </div>
+  </div>`;
+}
+
+function featuredCard(p,i){
+  const icons={Magic:'✦',Nature:'🌿',Forest:'🌲',Stars:'★',Seasons:'🍂',Dreams:'◈',Love:'◇',Solitude:'◉'};
+  const lc=getLikeCount(p.id),liked=isLiked(p.id),cc=(allComments[p.id]||[]).length;
+  return`<div class="poem-card featured" style="animation-delay:${i*.07}s">
+    <div class="poem-content">
+      <div class="featured-badge">✦ &nbsp;Featured Verse</div>
+      <div class="poem-tag">${p.category}</div>
+      <h3 onclick="openPoemPage(${p.id})" style="cursor:pointer;">${p.title}</h3>
+      <div class="poem-preview" onclick="openPoemPage(${p.id})" style="cursor:pointer;">${poemPreview(p.body)}</div>
+      <div class="poem-meta">
+        <div class="poem-meta-left">
+          <button class="card-heart ${liked?'liked':''}" onclick="toggleLike(event,${p.id})">${heartSVG()}</button>
+          <span id="lc-${p.id}">${lc>0?lc:''}</span>
+          ${cc>0?`<span style="font-size:.75rem;color:rgba(196,184,152,.4);font-family:'EB Garamond',serif;">💬 ${cc}</span>`:''}
+        </div>
+        <span class="read-link" onclick="openPoemPage(${p.id})" style="cursor:pointer;">Read the full verse ›</span>
+      </div>
+    </div>
+    <div class="poem-illustration">
+      <svg viewBox="0 0 200 200" width="180" height="180" xmlns="http://www.w3.org/2000/svg" opacity=".35">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#d4af37" stroke-width=".5"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#d4af37" stroke-width=".3"/>
+        <path d="M100 20 L100 180 M20 100 L180 100 M44 44 L156 156 M44 156 L156 44" stroke="#d4af37" stroke-width=".3" opacity=".5"/>
+        <circle cx="100" cy="100" r="8" fill="none" stroke="#d4af37" stroke-width="1"/>
+        <text x="100" y="104" text-anchor="middle" font-size="12" fill="#d4af37" font-family="Georgia,serif" opacity=".7">${icons[p.category]||'✦'}</text>
+        <text x="100" y="172" text-anchor="middle" font-size="7" fill="#c4b898" font-family="Georgia,serif" letter-spacing="3" opacity=".5">THE ENCHANTED QUILL</text>
+      </svg>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// PAGINATION RENDERERS
+// ═══════════════════════════════════════
+function renderGrovePagination(total,containerId,cls,onPage){
+  const el=document.getElementById(containerId);
+  if(total<=1){el.innerHTML='';return;}
+  const cur=gridPage;
+  let html=`<button class="gpg-nav${cur===1?' disabled':''}" onclick="setGridPage(${Math.max(1,cur-1)})">← Prev</button>`;
+  const pages=paginationPages(cur,total);
+  pages.forEach(p=>{
+    if(p==='…')html+=`<span class="gpg-dots">···</span>`;
+    else html+=`<button class="gpg-btn${p===cur?' active':''}" onclick="setGridPage(${p})">${p}</button>`;
+  });
+  html+=`<button class="gpg-nav${cur===total?' disabled':''}" onclick="setGridPage(${Math.min(total,cur+1)})">Next →</button>`;
+  el.innerHTML=html;
+}
+
+function renderEnchantedPagination(cur,total,containerId,onPageFn){
+  const el=document.getElementById(containerId);
+  if(total<=1){el.innerHTML='';return;}
+  let html=`<div class="epg-info">Leaf ${cur} of ${total}</div><div class="epg-stem">`;
+  html+=`<button class="epg-nav${cur===1?' disabled':''}" onclick="${onPageFn}(${Math.max(1,cur-1)})">← Prev</button>`;
+  const pages=paginationPages(cur,total);
+  pages.forEach(p=>{
+    if(p==='…')html+=`<span class="epg-dots">⋯</span>`;
+    else html+=`<button class="epg-btn${p===cur?' active':''}" onclick="${onPageFn}(${p})">${p}</button>`;
+  });
+  html+=`<button class="epg-nav${cur===total?' disabled':''}" onclick="${onPageFn}(${Math.min(total,cur+1)})">Next →</button>`;
+  html+=`</div>`;
+  el.innerHTML=html;
+}
+
+function paginationPages(cur,total){
+  if(total<=7)return Array.from({length:total},(_,i)=>i+1);
+  const pages=[];
+  if(cur<=4){pages.push(1,2,3,4,5,'…',total);}
+  else if(cur>=total-3){pages.push(1,'…',total-4,total-3,total-2,total-1,total);}
+  else{pages.push(1,'…',cur-1,cur,cur+1,'…',total);}
+  return pages;
+}
+
+// ═══════════════════════════════════════
+// LIKE TOGGLE
+// ═══════════════════════════════════════
+function toggleLike(e,id){
+  e.stopPropagation();
+  const btn=e.currentTarget;
+  if(isLiked(id)){userLiked=userLiked.filter(x=>x!==id);likes[id]=Math.max(0,(likes[id]||1)-1);}
+  else{userLiked.push(id);likes[id]=(likes[id]||0)+1;btn.classList.add('heart-pop');setTimeout(()=>btn.classList.remove('heart-pop'),500);}
+  saveUserLiked(userLiked);saveLikes(likes);
+  const lcEl=document.getElementById('lc-'+id);
+  if(lcEl)lcEl.textContent=likes[id]>0?likes[id]:'';
+  if(isLiked(id))btn.classList.add('liked');else btn.classList.remove('liked');
+  if(currentPoemId===id)updateReadingPageLike();
+}
+function updateReadingPageLike(){
+  const btn=document.getElementById('reading-like-btn'),cnt=document.getElementById('reading-like-count');
+  if(!btn||!cnt)return;
+  const lc=getLikeCount(currentPoemId);
+  if(isLiked(currentPoemId))btn.classList.add('liked');else btn.classList.remove('liked');
+  cnt.textContent=lc>0?`${lc} ${lc===1?'heart':'hearts'}`:'Be the first to love this';
+}
+
+// ═══════════════════════════════════════
+// POEM READING PAGE
+// ═══════════════════════════════════════
+let cmtPage=1;
+const CMT_PER_PAGE=5;
+
+function openPoemPage(id){
+  currentPoemId=id;cmtPage=1;
+  const p=poems.find(x=>x.id===id);
+  if(!p)return;
+  recordView(id);
+  renderPoemPage(p);
+  showPage('poem');
+}
+
+function renderPoemPage(p){
+  const lc=getLikeCount(p.id),liked=isLiked(p.id),vc=getViewCount(p.id);
+  const wrap=document.getElementById('poem-reading-wrap');
+  wrap.innerHTML=`
+    <button class="back-btn" onclick="showPage('home')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to the grove
+    </button>
+    <div class="reading-tag">${p.category}</div>
+    <div class="reading-title">${p.title}</div>
+    <div class="reading-dates">
+      <span>Published ${p.date}</span>
+      ${p.updatedDate?`<span class="updated-badge">✦ Updated ${p.updatedDate}</span>`:''}
+      <span class="view-badge">👁 ${vc} ${vc===1?'visit':'visits'}</span>
+    </div>
+    <div class="like-bar">
+      <button class="like-btn ${liked?'liked':''}" id="reading-like-btn" onclick="toggleReadingLike()">${heartSVG()} Love this poem</button>
+      <span class="like-count" id="reading-like-count">${lc>0?`${lc} ${lc===1?'heart':'hearts'}`:'Be the first to love this'}</span>
+    </div>
+    <div class="ornament-reading">· ✦ ·</div>
+    <div class="poem-full-text">${p.body}</div>
+    <div class="ornament-reading">· ✦ · ✦ · ✦ ·</div>
+    <div class="comments-section">
+      <div class="comments-title">Whispers from Readers</div>
+      ${commentFormHTML()}
+      <div id="comments-area"></div>
+    </div>`;
+  renderCommentsList();
+}
+
+function toggleReadingLike(){
+  const btn=document.getElementById('reading-like-btn');if(!btn)return;
+  if(isLiked(currentPoemId)){userLiked=userLiked.filter(x=>x!==currentPoemId);likes[currentPoemId]=Math.max(0,(likes[currentPoemId]||1)-1);}
+  else{userLiked.push(currentPoemId);likes[currentPoemId]=(likes[currentPoemId]||0)+1;btn.classList.add('heart-pop');setTimeout(()=>btn.classList.remove('heart-pop'),500);}
+  saveUserLiked(userLiked);saveLikes(likes);updateReadingPageLike();
+}
+
+// ═══════════════════════════════════════
+// COMMENTS (paginated)
+// ═══════════════════════════════════════
+function commentFormHTML(){
+  return`<div class="comment-form">
+    <div class="comment-form-title">Leave a whisper in the grove…</div>
+    <div class="comment-inputs">
+      <input type="text" id="comment-name" placeholder="Your name (optional — or remain a wanderer)">
+      <input type="text" id="comment-title-field" placeholder="A small title (optional)">
+    </div>
+    <textarea id="comment-text" placeholder="Share what stirred in you as you read…"></textarea>
+    <button class="btn-comment" onclick="submitComment()">✦ Leave your whisper</button>
+  </div>`;
+}
+
+function renderCommentsList(){
+  const area=document.getElementById('comments-area');if(!area)return;
+  const comments=allComments[currentPoemId]||[];
+  const total=Math.max(1,Math.ceil(comments.length/CMT_PER_PAGE));
+  if(cmtPage>total)cmtPage=total;
+  const start=(cmtPage-1)*CMT_PER_PAGE;
+  const page=comments.slice(start,start+CMT_PER_PAGE);
+  let html=`<div class="comments-list">${page.length?page.map(c=>renderOneComment(c,currentPoemId)).join(''):`<div class="no-comments">No whispers yet — be the first to speak into the forest…</div>`}</div>`;
+  area.innerHTML=html;
+  if(comments.length>CMT_PER_PAGE){
+    const pgDiv=document.createElement('div');
+    pgDiv.className='cmt-pagination';
+    let phtml=`<button class="gpg-nav${cmtPage===1?' disabled':''}" onclick="setCmtPage(${cmtPage-1})">← Prev</button>`;
+    paginationPages(cmtPage,total).forEach(p=>{
+      if(p==='…')phtml+=`<span class="gpg-dots">···</span>`;
+      else phtml+=`<button class="gpg-btn${p===cmtPage?' active':''}" onclick="setCmtPage(${p})">${p}</button>`;
+    });
+    phtml+=`<button class="gpg-nav${cmtPage===total?' disabled':''}" onclick="setCmtPage(${cmtPage+1})">Next →</button>`;
+    pgDiv.innerHTML=phtml;
+    area.appendChild(pgDiv);
+  }
+}
+
+function setCmtPage(p){cmtPage=p;renderCommentsList();}
+
+function renderOneComment(c,poemId){
+  const isAuthorComment=c.isAuthor;
+  const replies=c.replies||[];
+  const clc=c.likes||0;
+  const cliked=(c.likedBy||[]).includes('reader_'+getReaderId());
+  return`<div class="comment-item ${isAuthorComment?'author-reply':''}" id="comment-${c.id}">
+    <div class="comment-header">
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
+        <span class="comment-name ${!c.name&&!isAuthorComment?'anon':''}">${isAuthorComment?'✦ The Poet':(c.name||'A wandering reader')}</span>
+        ${isAuthorComment?'<span class="author-crown">✦ Author</span>':''}
+        ${c.title?`<span style="font-size:.78rem;color:rgba(196,184,152,.4);font-family:'EB Garamond',serif;font-style:italic;">"${c.title}"</span>`:''}
+      </div>
+      <span class="comment-date">${c.date}</span>
+    </div>
+    <div class="comment-text">${escapeHtml(c.text)}</div>
+    <div class="comment-actions">
+      <button class="comment-like-btn ${cliked?'liked':''}" onclick="likeComment('${poemId}','${c.id}')">${heartSVG()} ${clc>0?clc:''}</button>
+      <button class="btn-reader-reply" onclick="toggleReplyForm('${c.id}')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply
+      </button>
+      ${isWriter?`<button class="comment-delete-btn" onclick="deleteComment('${poemId}','${c.id}')">✕ Remove</button>`:''}
+    </div>
+    <div class="reply-form-wrap" id="reply-form-${c.id}">
+      <input type="text" id="reply-name-${c.id}" placeholder="Your name (optional)…">
+      <textarea placeholder="${isWriter?'Reply as the poet…':'Share your thoughts…'}" id="reply-text-${c.id}"></textarea>
+      <div class="reply-row">
+        <button class="btn-comment" onclick="submitReply('${poemId}','${c.id}')">✦ Post Reply</button>
+        <button class="btn-comment" style="opacity:.5;" onclick="toggleReplyForm('${c.id}')">Cancel</button>
+      </div>
+    </div>
+    ${replies.length?`<div class="replies-list">${replies.map(r=>renderReply(r)).join('')}</div>`:''}
+  </div>`;
+}
+
+function renderReply(r){
+  const isPoet=r.isPoet;
+  return`<div class="reply-item ${isPoet?'poet-reply':'reader-reply'}">
+    <div class="comment-header">
+      <div style="display:flex;align-items:center;gap:.6rem;">
+        <span class="comment-name ${!isPoet&&!r.name?'anon':''}">${isPoet?'✦ The Poet':(r.name||'A wandering reader')}</span>
+        ${isPoet?'<span class="author-crown">✦ Author</span>':''}
+      </div>
+      <span class="comment-date">${r.date}</span>
+    </div>
+    <div class="comment-text">${escapeHtml(r.text)}</div>
+  </div>`;
+}
+
+function submitComment(){
+  const name=document.getElementById('comment-name')?.value.trim();
+  const title=document.getElementById('comment-title-field')?.value.trim();
+  const text=document.getElementById('comment-text')?.value.trim();
+  if(!text){showToast('Please write something before leaving your whisper.');return;}
+  const comment={id:Date.now().toString(),name:name||'',title:title||'',text,date:nowStr(),likes:0,likedBy:[],replies:[],isAuthor:isWriter};
+  if(!allComments[currentPoemId])allComments[currentPoemId]=[];
+  allComments[currentPoemId].unshift(comment);
+  saveComments(allComments);
+  document.getElementById('comment-name').value='';
+  document.getElementById('comment-title-field').value='';
+  document.getElementById('comment-text').value='';
+  cmtPage=1;renderCommentsList();
+  showToast('Your whisper has joined the grove ✦');
+}
+
+function submitReply(poemId,commentId){
+  const ta=document.getElementById('reply-text-'+commentId);
+  const ni=document.getElementById('reply-name-'+commentId);
+  const text=ta?.value.trim();if(!text)return;
+  const name=ni?.value.trim()||'';
+  const reply={id:Date.now().toString(),name,text,date:nowStr(),isPoet:isWriter};
+  const comments=allComments[poemId]||[];
+  const c=comments.find(x=>x.id===commentId);
+  if(c){if(!c.replies)c.replies=[];c.replies.push(reply);saveComments(allComments);}
+  toggleReplyForm(commentId);renderCommentsList();
+  showToast(isWriter?'Your reply drifted into the grove ✦':'Your reply has been woven in ✦');
+}
+
+function likeComment(poemId,commentId){
+  const rid='reader_'+getReaderId();
+  const comments=allComments[poemId]||[];
+  const c=comments.find(x=>x.id===commentId);if(!c)return;
+  if(!c.likedBy)c.likedBy=[];
+  if(c.likedBy.includes(rid)){c.likedBy=c.likedBy.filter(x=>x!==rid);c.likes=Math.max(0,(c.likes||1)-1);}
+  else{c.likedBy.push(rid);c.likes=(c.likes||0)+1;}
+  saveComments(allComments);renderCommentsList();
+}
+
+function deleteComment(poemId,commentId){
+  if(!confirm('Remove this whisper from the grove?'))return;
+  allComments[poemId]=(allComments[poemId]||[]).filter(c=>c.id!==commentId);
+  saveComments(allComments);renderCommentsList();
+  showToast('The whisper has faded into the forest…');
+}
+
+function toggleReplyForm(commentId){
+  const el=document.getElementById('reply-form-'+commentId);
+  if(el)el.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════
+// PAGE NAVIGATION
+// ═══════════════════════════════════════
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const navEl=document.getElementById('nav-'+page);
+  if(navEl)navEl.classList.add('active');
+  updateMobileNavActive(page);
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='home')renderGrid();
+  if(page==='admin')renderAdminPage();
+}
+
+// ═══════════════════════════════════════
+// ADMIN AUTH
+// ═══════════════════════════════════════
+function renderAdminPage(){
+  if(isWriter){
+    document.getElementById('admin-login-state').style.display='none';
+    document.getElementById('admin-dashboard-state').style.display='block';
+    renderStats();renderPoemsTable();renderAdminComments();populateCategorySelect('poem-category');
+  }else{
+    document.getElementById('admin-login-state').style.display='block';
+    document.getElementById('admin-dashboard-state').style.display='none';
+    setTimeout(()=>{const pw=document.getElementById('admin-password');if(pw){pw.value='';pw.focus();}},100);
+    document.getElementById('admin-login-error').style.display='none';
+  }
+}
+function tryAdminLogin(){
+  if(document.getElementById('admin-password').value===WRITER_PASS){isWriter=true;renderAdminPage();}
+  else{const err=document.getElementById('admin-login-error');err.style.display='block';document.getElementById('admin-password').value='';setTimeout(()=>err.style.display='none',3000);}
+}
+function logoutAdmin(){isWriter=false;showToast('You have sealed the sanctum. Until next time, dear poet.');showPage('home');}
+
+// ═══════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════
+function renderStats(){
+  const totalViews=poems.reduce((a,p)=>a+getViewCount(p.id),0);
+  const totalLikes=poems.reduce((a,p)=>a+getLikeCount(p.id),0);
+  const totalComments=poems.reduce((a,p)=>a+(allComments[p.id]||[]).length,0);
+  const totalReplies=poems.reduce((a,p)=>{const cs=allComments[p.id]||[];return a+cs.reduce((b,c)=>b+(c.replies||[]).length,0);},0);
+  const active=poems.filter(p=>!p.archived).length;
+  const archived=poems.filter(p=>p.archived).length;
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-card"><div class="stat-icon">📜</div><div class="stat-value">${active}</div><div class="stat-label">Active</div><div class="stat-sub">${archived} archived</div></div>
+    <div class="stat-card"><div class="stat-icon">👁</div><div class="stat-value">${totalViews}</div><div class="stat-label">Views</div><div class="stat-sub">total visits</div></div>
+    <div class="stat-card"><div class="stat-icon">♡</div><div class="stat-value">${totalLikes}</div><div class="stat-label">Hearts</div><div class="stat-sub">given to verses</div></div>
+    <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-value">${totalComments}</div><div class="stat-label">Whispers</div><div class="stat-sub">${totalReplies} replies</div></div>
+    <div class="stat-card"><div class="stat-icon">🏷</div><div class="stat-value">${categories.length}</div><div class="stat-label">Categories</div><div class="stat-sub">in the grove</div></div>`;
+}
+
+// ═══════════════════════════════════════
+// ADMIN TABS
+// ═══════════════════════════════════════
+function switchAdminTab(name,btn){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('atab-'+name).classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// CATEGORIES
+// ═══════════════════════════════════════
+function populateCategorySelect(selId){
+  const sel=document.getElementById(selId);if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML=categories.map(c=>`<option value="${c}">${c}</option>`).join('');
+  if(cur&&categories.includes(cur))sel.value=cur;
+}
+function toggleNewCatRow(ctx){
+  const id=ctx==='edit'?'new-cat-row-edit':'new-cat-row';
+  const row=document.getElementById(id);if(!row)return;
+  row.classList.toggle('open');
+  if(row.classList.contains('open'))setTimeout(()=>document.getElementById(ctx==='edit'?'new-cat-input-edit':'new-cat-input')?.focus(),50);
+}
+function confirmNewCategory(ctx){
+  const id=ctx==='edit'?'new-cat-input-edit':'new-cat-input';
+  const inp=document.getElementById(id);const name=inp?.value.trim();
+  if(!name){showToast('Please enter a category name.');return;}
+  if(categories.includes(name)){showToast('That category already exists.');return;}
+  categories.push(name);saveCategories(categories);
+  populateCategorySelect('poem-category');populateCategorySelect('edit-category');
+  const selId=ctx==='edit'?'edit-category':'poem-category';
+  document.getElementById(selId).value=name;
+  inp.value='';
+  document.getElementById(ctx==='edit'?'new-cat-row-edit':'new-cat-row').classList.remove('open');
+  renderTags();renderStats();renderCatFilterBtns();
+  showToast(`✦ "${name}" added to the grove's tapestry.`);
+}
+
+// ═══════════════════════════════════════
+// POEMS TABLE (admin)
+// ═══════════════════════════════════════
+const POEMS_PER_PAGE=5;
+let poemsAdminPage=1;
+let poemFilter='all';
+
+function setPoemFilter(f,btn){
+  poemFilter=f;poemsAdminPage=1;
+  document.querySelectorAll('.tb-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPoemsTable();
+}
+
+function renderCatFilterBtns(){
+  const el=document.getElementById('cat-filter-btns');if(!el)return;
+  const cats=[...new Set(poems.map(p=>p.category))];
+  el.innerHTML=cats.map(c=>`<button class="tb-filter" onclick="setCatFilter('${c}',this)">${c}</button>`).join('');
+}
+function setCatFilter(cat,btn){
+  poemFilter='cat:'+cat;poemsAdminPage=1;
+  document.querySelectorAll('.tb-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPoemsTable();
+}
+
+function getFilteredAdminPoems(){
+  if(poemFilter==='all')return poems;
+  if(poemFilter==='featured')return poems.filter(p=>p.featured&&!p.archived);
+  if(poemFilter==='archived')return poems.filter(p=>p.archived);
+  if(poemFilter.startsWith('cat:'))return poems.filter(p=>p.category===poemFilter.slice(4));
+  return poems;
+}
+
+function formatAdminTitle(title){
+  const words=title.trim().split(/\s+/);
+  if(words.length>10){
+    return words.slice(0,5).join(' ')+'…';
+  } else if(words.length>5){
+    return words.slice(0,5).join(' ')+'<br>'+words.slice(5).join(' ');
+  }
+  return title;
+}
+
+function renderPoemsTable(){
+  renderCatFilterBtns();
+  const filtered=getFilteredAdminPoems();
+  const total=Math.max(1,Math.ceil(filtered.length/POEMS_PER_PAGE));
+  if(poemsAdminPage>total)poemsAdminPage=total;
+  const start=(poemsAdminPage-1)*POEMS_PER_PAGE;
+  const page=filtered.slice(start,start+POEMS_PER_PAGE);
+  const tbody=document.getElementById('poems-tbody');if(!tbody)return;
+  if(!page.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:2rem;font-style:italic;color:rgba(200,216,232,.3);">No poems found in this scroll…</td></tr>`;document.getElementById('poems-pagination').innerHTML='';return;}
+  tbody.innerHTML=page.map(p=>{
+    const vc=getViewCount(p.id),lc=getLikeCount(p.id),cc=(allComments[p.id]||[]).length;
+    return`<tr class="${p.archived?'archived':''}">
+      <td><span class="poem-title-cell" title="${p.title}">${formatAdminTitle(p.title)}</span></td>
+      <td><span class="cat-chip">${p.category}</span></td>
+      <td style="white-space:nowrap;font-size:.78rem;">${p.date}${p.updatedDate?`<br><span style="color:rgba(122,179,212,.5);font-size:.7rem;">✦ ${p.updatedDate}</span>`:''}</td>
+      <td style="color:rgba(200,216,232,.45);">${vc}</td>
+      <td style="color:rgba(232,115,138,.6);">${lc}</td>
+      <td style="color:rgba(122,179,212,.5);">${cc}</td>
+      <td>${p.archived?'<span class="arch-chip">Archived</span>':p.featured?'<span class="feat-chip">Featured</span>':'<span style="font-size:.7rem;color:rgba(200,216,232,.25);">—</span>'}</td>
+      <td><div class="poem-actions">
+        <button class="btn-tbl btn-tbl-read" onclick="adminReadPoem(${p.id})">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Read
+        </button>
+        <button class="btn-tbl btn-tbl-edit" onclick="openEditModal(${p.id})">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit
+        </button>
+        ${p.archived
+          ?`<button class="btn-tbl btn-tbl-restore" onclick="restorePoem(${p.id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>Restore</button>`
+          :`<button class="btn-tbl btn-tbl-arch" onclick="archivePoem(${p.id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>Archive</button>`}
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderEnchantedPagination(poemsAdminPage,total,'poems-pagination','setPoemsAdminPage');
+}
+
+function setPoemsAdminPage(p){poemsAdminPage=p;renderPoemsTable();}
+function adminReadPoem(id){showPage('home');setTimeout(()=>openPoemPage(id),50);}
+function archivePoem(id){
+  const p=poems.find(x=>x.id===id);if(!p)return;
+  p.archived=true;if(p.featured)p.featured=false;
+  savePoems(poems);renderPoemsTable();renderGrid();renderTags();renderStats();
+  showToast('The verse has been gently set aside…');
+}
+function restorePoem(id){
+  const p=poems.find(x=>x.id===id);if(!p)return;
+  p.archived=false;savePoems(poems);renderPoemsTable();renderGrid();renderTags();renderStats();
+  showToast('The verse breathes again in the grove ✦');
+}
+
+// ═══════════════════════════════════════
+// EDIT MODAL
+// ═══════════════════════════════════════
+function openEditModal(id){
+  editingPoemId=id;
+  const p=poems.find(x=>x.id===id);if(!p)return;
+  populateCategorySelect('edit-category');
+  document.getElementById('edit-title').value=p.title;
+  document.getElementById('edit-body').value=p.body;
+  document.getElementById('edit-category').value=p.category;
+  document.getElementById('edit-featured').value=p.featured?'yes':'no';
+  document.getElementById('edit-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeEditModal(){
+  document.getElementById('edit-modal').classList.remove('open');
+  document.body.style.overflow='';editingPoemId=null;
+}
+function saveEditPoem(){
+  const p=poems.find(x=>x.id===editingPoemId);if(!p)return;
+  const title=document.getElementById('edit-title').value.trim();
+  const body=document.getElementById('edit-body').value.trim();
+  const category=document.getElementById('edit-category').value;
+  const featured=document.getElementById('edit-featured').value==='yes';
+  if(!title||!body){showToast('Title and poem body are required.');return;}
+  if(featured)poems.forEach(x=>x.featured=false);
+  p.title=title;p.body=body;p.category=category;p.featured=featured;
+  p.updatedDate=nowStr();
+  savePoems(poems);closeEditModal();
+  renderPoemsTable();renderGrid();renderTags();renderStats();
+  showToast('✦ Your verse has been refined and saved.');
+}
+
+// ═══════════════════════════════════════
+// PUBLISH
+// ═══════════════════════════════════════
+function publishPoem(){
+  const title=document.getElementById('poem-title').value.trim();
+  const body=document.getElementById('poem-body').value.trim();
+  const category=document.getElementById('poem-category').value;
+  const featured=document.getElementById('poem-featured').value==='yes';
+  if(!title||!body){showToast('Please give your poem a title and body, dear poet.');return;}
+  const newPoem={id:Date.now(),title,body,category,featured,archived:false,date:nowStr(),updatedDate:null};
+  if(featured)poems=poems.map(p=>({...p,featured:false}));
+  poems=[newPoem,...poems];savePoems(poems);
+  document.getElementById('poem-title').value='';
+  document.getElementById('poem-body').value='';
+  document.getElementById('poem-featured').value='no';
+  renderGrid();renderTags();renderPoemsTable();renderStats();
+  showToast('✦ Your verse has been released into the grove.');
+}
+
+// ═══════════════════════════════════════
+// ADMIN COMMENTS TABLE (paginated)
+// ═══════════════════════════════════════
+const CMTS_ADMIN_PER_PAGE=8;
+let cmtsAdminPage=1;
+let cmtFilter='all';
+
+function setCmtFilter(f,btn){
+  cmtFilter=f;cmtsAdminPage=1;
+  document.querySelectorAll('.whispers-toolbar .tb-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderAdminComments();
+}
+
+function renderAdminComments(){
+  const query=(document.getElementById('cmt-search')?.value||'').toLowerCase();
+  let allFlat=[];
+  poems.forEach(p=>{
+    (allComments[p.id]||[]).forEach(c=>{allFlat.push({...c,poemTitle:p.title,poemId:p.id});});
+  });
+  if(cmtFilter==='noreplies')allFlat=allFlat.filter(c=>!(c.replies||[]).some(r=>r.isPoet));
+  if(query)allFlat=allFlat.filter(c=>c.text.toLowerCase().includes(query)||(c.name||'').toLowerCase().includes(query)||c.poemTitle.toLowerCase().includes(query));
+  const total=Math.max(1,Math.ceil(allFlat.length/CMTS_ADMIN_PER_PAGE));
+  if(cmtsAdminPage>total)cmtsAdminPage=total;
+  const start=(cmtsAdminPage-1)*CMTS_ADMIN_PER_PAGE;
+  const page=allFlat.slice(start,start+CMTS_ADMIN_PER_PAGE);
+  const tbody=document.getElementById('comments-tbody');if(!tbody)return;
+  if(!page.length){tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:2rem;font-style:italic;color:rgba(200,216,232,.3);">No whispers found…</td></tr>`;document.getElementById('comments-pagination').innerHTML='';return;}
+  tbody.innerHTML=page.map(c=>{
+    const poetReplied=(c.replies||[]).some(r=>r.isPoet);
+    const words=c.text.trim().split(/\s+/);
+    const displayText=words.length>5?escapeHtml(words.slice(0,5).join(' '))+'…':escapeHtml(c.text);
+    return`<tr>
+      <td><span class="cmt-author">${c.isAuthor?'✦ The Poet':(c.name||'Wanderer')}</span></td>
+      <td><span class="cmt-poem">${c.poemTitle}</span></td>
+      <td><span class="cmt-text">${displayText}</span></td>
+      <td style="font-family:'EB Garamond',serif;font-size:.78rem;color:rgba(200,216,232,.35);white-space:nowrap;">${c.date}</td>
+      <td style="color:rgba(232,115,138,.5);">${c.likes||0}</td>
+      <td><span class="cmt-reply-count">${(c.replies||[]).length}${poetReplied?' <span style="color:rgba(212,175,55,.5);" title="Poet replied">✦</span>':''}</span></td>
+      <td><div style="display:flex;gap:.4rem;">
+        <button class="btn-reply-cmt" onclick="openReplyModal('${c.poemId}','${c.id}')">✦ Reply</button>
+        <button class="btn-del-cmt" onclick="adminDeleteComment('${c.poemId}','${c.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderEnchantedPagination(cmtsAdminPage,total,'comments-pagination','setCmtsAdminPage');
+}
+
+function setCmtsAdminPage(p){cmtsAdminPage=p;renderAdminComments();}
+
+function adminDeleteComment(poemId,commentId){
+  if(!confirm('Remove this whisper from the grove?'))return;
+  allComments[poemId]=(allComments[poemId]||[]).filter(c=>c.id!==commentId);
+  saveComments(allComments);renderAdminComments();renderStats();
+  showToast('The whisper has faded from the grove…');
+}
+
+// ═══════════════════════════════════════
+// REPLY MODAL (writer -> comment)
+// ═══════════════════════════════════════
+function openReplyModal(poemId,commentId){
+  replyTargetPoemId=poemId;replyTargetCommentId=commentId;
+  const comments=allComments[poemId]||[];
+  const c=comments.find(x=>x.id===commentId);
+  const fullText=c?c.text:'';
+  document.getElementById('reply-modal-ctx').textContent='"'+fullText+'"';
+  document.getElementById('reply-modal-text').value='';
+  document.getElementById('reply-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('reply-modal-text').focus(),100);
+}
+function closeReplyModal(){
+  document.getElementById('reply-modal').classList.remove('open');
+  document.body.style.overflow='';replyTargetPoemId=null;replyTargetCommentId=null;
+}
+function submitPoetReply(){
+  const text=document.getElementById('reply-modal-text').value.trim();
+  if(!text){showToast('Please write your reply first.');return;}
+  const comments=allComments[replyTargetPoemId]||[];
+  const c=comments.find(x=>x.id===replyTargetCommentId);
+  if(c){
+    if(!c.replies)c.replies=[];
+    c.replies.push({id:Date.now().toString(),name:'',text,date:nowStr(),isPoet:true});
+    saveComments(allComments);
+  }
+  closeReplyModal();renderAdminComments();renderStats();
+  showToast('✦ Your reply has drifted into the grove.');
+}
+
+// ═══════════════════════════════════════
+// MOBILE NAV
+// ═══════════════════════════════════════
+function toggleMobileNav(){
+  const drawer=document.getElementById('nav-mobile-drawer');
+  const hamburger=document.getElementById('nav-hamburger');
+  const open=drawer.classList.toggle('open');
+  hamburger.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobileNav(){
+  document.getElementById('nav-mobile-drawer').classList.remove('open');
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
+// Update mobile nav active state
+function updateMobileNavActive(page){
+  document.querySelectorAll('#nav-mobile-drawer a').forEach(a=>a.classList.remove('active'));
+  const el=document.getElementById('mnav-'+page);
+  if(el)el.classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// FIREFLIES
+// ═══════════════════════════════════════
+(function(){
+  const canvas=document.getElementById('firefly-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,flies;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function makeFly(){return{x:Math.random()*W,y:Math.random()*H,r:1.5+Math.random()*1.5,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,alpha:Math.random(),phase:Math.random()*Math.PI*2,speed:.008+Math.random()*.015,colorType:Math.floor(Math.random()*4)};}
+  const colors=[[245,200,66],[122,179,212],[180,200,240],[168,130,220]];
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    flies.forEach(f=>{
+      f.phase+=f.speed;f.alpha=.15+Math.abs(Math.sin(f.phase))*.7;
+      f.x+=f.vx+Math.sin(f.phase*.7)*.2;f.y+=f.vy+Math.cos(f.phase*.5)*.15;
+      if(f.x<-10)f.x=W+10;if(f.x>W+10)f.x=-10;if(f.y<-10)f.y=H+10;if(f.y>H+10)f.y=-10;
+      const[r,g,b]=colors[f.colorType];
+      const grad=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r*5);
+      grad.addColorStop(0,`rgba(${r},${g},${b},${f.alpha})`);
+      grad.addColorStop(.4,`rgba(${r},${g},${b},${f.alpha*.3})`);
+      grad.addColorStop(1,`rgba(${r},${g},${b},0)`);
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r*5,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r*.6,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,240,${f.alpha*.9})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  resize();
+  const flyCount=window.innerWidth<=768?28:55;
+  flies=Array.from({length:flyCount},makeFly);draw();
+})();
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+renderTags();
+renderGrid();
+</script>
+</body>
+</html>
